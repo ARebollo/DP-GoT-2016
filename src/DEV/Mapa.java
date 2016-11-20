@@ -159,6 +159,11 @@ public class Mapa {
 		this.grafoMapa = grafoMapa;
 	}
 
+	public boolean finJuego() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }
 
