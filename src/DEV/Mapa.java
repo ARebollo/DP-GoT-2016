@@ -45,7 +45,7 @@ public class Mapa {
 
 				if (mapaSalas[i][j].hayPersonajes() == true) {
 					if (mapaSalas[i][j].cuantosPJ() > 1) {
-						map = map + mapaSalas[i][j].cuantosPJ().toString();
+						map = map + String.valueOf(mapaSalas[i][j].cuantosPJ());
 						/* Si hay más de dos personajes en una estación,
 						 * muestra cuantos hay 
 						 */
