@@ -288,7 +288,7 @@ public class Sala{
 	}
 	
 	/**
-   	 * Obtiene la lista de Llave de la clase Sala
+   	 * Obtiene la lista de llaves de la clase Sala
    	 * 
    	 * @return Lista de tipo Llave
    	 * 
@@ -298,7 +298,7 @@ public class Sala{
 	}
 	
 	/**
-   	 * Cambia la lista de Llave de la clase Sala
+   	 * Cambia la lista de llaves de la clase Sala
    	 * 
    	 * @param listaLlaveSala Nueva lista de tipo Llave
    	 * 
@@ -366,7 +366,7 @@ public class Sala{
 	/**
    	 * Llama al metodo turnoPj de cada Personaje que se encuentra en la Sala y no haya realizado su turno
    	 * 
-   	 * @param mapa Nuestra mapaaxia
+   	 * @param mapa Nuestro mapa
    	 * 
    	 */
 	public boolean activarPJ (Mapa mapa){
