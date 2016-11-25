@@ -52,7 +52,7 @@ public class Mapa {
 		return fin;
 	}
 	
-	public int[] SalasMasFrec()
+	public Integer[] SalasMasFrec()
 	{
 		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
 		grafoMapa.encontrarListaCaminos(0, id_salida, listaCam, null);
@@ -75,7 +75,26 @@ public class Mapa {
 				frecuencias[est]++;
 			}
 		}
-		return frecuencias;
+		Integer[] SalasConLlaves = new Integer[9];
+		int max = 0;
+		for (int i = 0; i<9;i++)
+		{
+			for (int j = 0;j<frecuencias.length;j++)
+			{
+				if (frecuencias[j] > max)
+				{
+					if (SalasConLlaves[i] != 0)
+					{
+						frecuencias[SalasConLlaves[i]] = max;
+					}
+					max = frecuencias[j];
+					SalasConLlaves[i] = j;
+					frecuencias[j] = 0;
+				}
+				
+			}
+		}
+		return SalasConLlaves;
 	}
 	
 	
