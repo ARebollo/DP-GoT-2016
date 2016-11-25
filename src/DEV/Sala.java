@@ -149,6 +149,16 @@ public class Sala{
 	}
 	
 	/**
+   	 * Metodo para sacar un personaje de la sala
+   	 * 
+   	 * @return El primer personaje de la cola
+   	 * 
+   	 */
+	public Personaje sacarPj(){
+		return colaPers.remove(0);
+	}
+	
+	/**
    	 * Metodo para obtener al primer Personaje que se encuentra en la Sala
    	 * 
    	 * @return Objeto de la clase Personaje

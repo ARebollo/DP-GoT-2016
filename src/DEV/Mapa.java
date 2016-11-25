@@ -35,8 +35,19 @@ public class Mapa {
 		//TODO: Crear lista de llaves del mapa
 	}
 	
-	public void simTurnoMapa(){
-		
+	public boolean simTurnoMapa(){
+		boolean fin = false;
+		for(int i = 0;i<alto && !fin;i++)
+		{
+			for(int j = 0;j<ancho && !fin;j++)
+				fin = mapaSalas[i][j].activarPJ(this);
+		}
+		for(int i = 0;i<alto && !fin;i++)
+		{
+			for(int j = 0;j<ancho;j++)
+				mapaSalas[i][j].reiniciarTurnoPj();
+		}
+		return fin;
 	}
 	
 	

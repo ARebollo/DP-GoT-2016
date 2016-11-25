@@ -21,14 +21,18 @@ public class Targaryen extends Personaje{
 
 	@Override
 	protected void tocarPuerta(Puerta puertamap) {
-		// TODO Auto-generated method stub
-		
+		if (tieneLlaves())
+		{
+		 puertamap.probarLlave(sacarLlave());	
+		}
 	}
 
 	@Override
 	protected void tocarLlave(Sala sala) {
-		// TODO Auto-generated method stub
-		
+		if (sala.hayLlaves())
+		{
+		 aniadirLlave(sala.sacarLlave());
+		}
 	}
 
 }

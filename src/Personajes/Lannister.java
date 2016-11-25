@@ -3,12 +3,18 @@ package Personajes;
 import DEV.Mapa;
 import DEV.Puerta;
 import DEV.Sala;
+import Estructuras.Llave;
 
 public class Lannister extends Personaje {
 	
 	 public Lannister(String nombre, char marcaId, int turno, int idEstacion, Mapa map){
 	     	
 	     	super(nombre, marcaId, turno, idEstacion, map); 
+	     	
+	     	for (int i = 1; i <= 29; i = i + 2) {
+
+				aniadirLlave(new Llave(i)); // Los imperiales tienen una pila de midiclorianos del 1 al 29 saltandose los pares
+			}
 	     	
 	         System.out.println("Personaje " + getNombrePersonaje() +" creado.");
 	     }
@@ -21,13 +27,17 @@ public class Lannister extends Personaje {
 
 	@Override
 	protected void tocarPuerta(Puerta puertamap) {
-		// TODO Auto-generated method stub
+		puertamap.cerrarPuerta();
+		//TODO Resetear camino cuando toque
 		
 	}
 
 	@Override
 	protected void tocarLlave(Sala sala) {
-		// TODO Auto-generated method stub
+		if (getidSala() % 2 == 0 && tieneLlaves())
+		{
+		 getPilaLlave().removeLast();
+		}
 		
 	}
 

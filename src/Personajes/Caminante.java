@@ -21,13 +21,19 @@ public class Caminante extends Personaje{
 
 	@Override
 	protected void tocarPuerta(Puerta puertamap) {
-		// TODO Auto-generated method stub
+		puertamap.cerrarPuerta();
+		//TODO Resetear camino cuando toque
+		
 		
 	}
 
 	@Override
 	protected void tocarLlave(Sala sala) {
-		// TODO Auto-generated method stub
+		if (sala.hayPersonajes())
+		{
+			//TODO Hay que guardarlos en algun sitio?
+			sala.sacarPj();
+		}
 		
 	}
 

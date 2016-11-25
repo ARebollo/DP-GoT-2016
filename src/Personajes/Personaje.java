@@ -21,7 +21,7 @@ public abstract class Personaje {
         enum dir {N, S, E, O};
        
         private String nombrePersonaje;
-        private int idEstacion;
+        private int idSala;
         private char marcaId;
         private int turno;
         private int turnoActual;
@@ -37,7 +37,7 @@ public abstract class Personaje {
         	
                 this.nombrePersonaje = "";
                 this.marcaId = ' ';
-                this.idEstacion = -1;
+                this.idSala = -1;
                 this.turno = -1;
                 this.turnoActual = 0;
                 haMovido = false;
@@ -51,21 +51,21 @@ public abstract class Personaje {
         * @param nombre Nombre del personaje
         * @param marcaId Marca del personaje
         * @param turno Turno en el que empieza a moverse el personaje
-        * @param idEstacion Estacion en la que se encuentra el personaje
+        * @param idSala Estacion en la que se encuentra el personaje
         * @param map Nuestra Mapa
         * 
         */
-        public Personaje(String nombre, char marcaId, int turno, int idEstacion, Mapa map){
+        public Personaje(String nombre, char marcaId, int turno, int idSala, Mapa map){
         	
                 this.nombrePersonaje = nombre;
                 this.marcaId = marcaId;
-                this.idEstacion = idEstacion;
+                this.idSala = idSala;
                 this.turno = turno;
                 this.turnoActual = 0;
                 haMovido = false;
                 camino = new LinkedList<dir>();
                 pilaLlave = new LinkedList<Llave>();
-                map.buscarSala(idEstacion).aniadirPj(this);
+                map.buscarSala(idSala).aniadirPj(this);
                 hallarCamino(map);
         }
         
@@ -195,23 +195,23 @@ public abstract class Personaje {
 		}
 		
 		/**
-		 * Obtiene el atributo idEstacion de la clase Personaje
+		 * Obtiene el atributo idSala de la clase Personaje
 		 * 
 		 * @return Id de la estacion en la que se encuentra el Personaje
 		 * 
 		 */
-		public int getIdEstacion() {
-			return idEstacion;
+		public int getidSala() {
+			return idSala;
 		}
 		
 		/**
-		 * Cambia el valor del atributo idEstacion de la clase Personaje
+		 * Cambia el valor del atributo idSala de la clase Personaje
 		 * 
-		 * @param idEstacion Nuevo valor
+		 * @param idSala Nuevo valor
 		 * 
 		 */
-		public void setIdEstacion(int idEstacion) {
-			this.idEstacion = idEstacion;
+		public void setidSala(int idSala) {
+			this.idSala = idSala;
 		}
 		
 		/**
@@ -358,16 +358,16 @@ public abstract class Personaje {
 			
 			switch (direccion){
 			case S:
-				sig = idEstacion + ancho;
+				sig = idSala + ancho;
 				break;
 			case E:
-				sig = idEstacion + 1;
+				sig = idSala + 1;
 				break;
 			case N:
-				sig = idEstacion - ancho;
+				sig = idSala - ancho;
 				break;
 			case O:
-				sig = idEstacion - 1;  
+				sig = idSala - 1;  
 				break;
 			}
 			return sig;
@@ -402,22 +402,22 @@ public abstract class Personaje {
 			setHaMovido(true);
 			turnoActual++;
 			
-			if (map.getId_salida() == idEstacion)	//Si la estacion en la que se encuentra el pj es la de salida, interactuar con la puerta, y si queda camino, moverse al que indica
+			if (map.getId_salida() == idSala)	//Si la estacion en la que se encuentra el pj es la de salida, interactuar con la puerta, y si queda camino, moverse al que indica
 			{
 				tocarPuerta(map.getPuertaTrono());
 			 	if (camino.peek() != null)
 			 	{
 			 		map.buscarSala(dirACamino(camino.peek(), map.getAncho())).aniadirPj(this);  // Obtiene el camino del pj, busca la estacion con esa id y luego añade el personaje
-			 		setIdEstacion(dirACamino(camino.remove(), map.getAncho()));
+			 		setidSala(dirACamino(camino.remove(), map.getAncho()));
 			 	}
-			 	else map.buscarSala(idEstacion).aniadirPj(this);
+			 	else map.buscarSala(idSala).aniadirPj(this);
 			}
 			else
 			{
 				map.buscarSala(dirACamino(camino.peek(), map.getAncho())).aniadirPj(this);  // Obtiene el camino del pj, busca la estacion con esa id y luego añade el personaje
-				setIdEstacion(dirACamino(camino.remove(), map.getAncho()));
+				setidSala(dirACamino(camino.remove(), map.getAncho()));
 			 
-				tocarLlave(map.buscarSala(idEstacion));
+				tocarLlave(map.buscarSala(idSala));
 			}
 		}
 		
@@ -443,7 +443,7 @@ public abstract class Personaje {
 				Llaves = Llaves + " " + it.next().toString();
 			}
 		
-		  return "(" + getClass().getSimpleName() + ":" + marcaId + ":" + idEstacion + ":" + turnoActual + ":" + Llaves + ")";
+		  return "(" + getClass().getSimpleName() + ":" + marcaId + ":" + idSala + ":" + turnoActual + ":" + Llaves + ")";
 		}
  
 }
