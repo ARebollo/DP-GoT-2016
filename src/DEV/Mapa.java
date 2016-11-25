@@ -164,6 +164,9 @@ public class Mapa {
 		return false;
 	}
 
+	public String toString(){
+		return this.mapaAString();
+	}
 
 }
 
