@@ -2,6 +2,8 @@ package DEV;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import Estructuras.Grafo;
@@ -16,9 +18,66 @@ public class Mapa {
 	private Queue<Llave> listaLlaveMapa;
 	private Grafo grafoMapa;
 	
-	public void simTurnoMapa(){
+	Mapa(int alto, int ancho, int id, int prof){
+		this.alto = alto;
+		this.ancho = ancho;
+		this.id_salida = id;
+		puertaTrono = new Puerta(prof);
 		
+		//Inicializamos cada Sala con su id
+		mapaSalas = new Sala[alto][ancho];
+		for (int i = 0; i < alto; i++) {
+			for (int j = 0; j < ancho; j++) {
+				mapaSalas[i][j] = new Sala(j + ancho * i);
+			}
+		}
+		buscarSala(id_salida).setPuertaSalida(true);
+		grafoMapa = new Grafo(alto,ancho);
+		grafoMapa.procesarParedes(ancho, 1987);
+		//TODO: Crear lista de llaves del mapa
 	}
+	
+	public boolean simTurnoMapa(){
+		boolean fin = false;
+		for(int i = 0;i<alto && !fin;i++)
+		{
+			for(int j = 0;j<ancho && !fin;j++)
+				fin = mapaSalas[i][j].activarPJ(this);
+		}
+		for(int i = 0;i<alto && !fin;i++)
+		{
+			for(int j = 0;j<ancho;j++)
+				mapaSalas[i][j].reiniciarTurnoPj();
+		}
+		return fin;
+	}
+	
+	public int[] SalasMasFrec()
+	{
+		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
+		grafoMapa.encontrarListaCaminos(0, id_salida, listaCam, null);
+		
+		//Creamos el vector de frecuencias y lo iniciamos a 0
+		int[] frecuencias = new int[alto*ancho];
+		for(int i = 0;i<frecuencias.length;i++)
+		{
+			frecuencias[i] = 0;
+		}
+		
+		List<Integer> camino;
+		int est;
+		while(!listaCam.isEmpty())
+		{
+			camino = listaCam.remove(0);
+			while (!camino.isEmpty())
+			{
+				est = camino.remove(0);
+				frecuencias[est]++;
+			}
+		}
+		return frecuencias;
+	}
+	
 	
 	private String mapaAString(){
 		String map = "";
@@ -106,9 +165,10 @@ public class Mapa {
 		return map;
 	}
 
-	//TODO
-	public Sala buscarSala(int id){
-		return null;
+	public Sala buscarSala(int id) {
+
+		return mapaSalas[id / ancho][id % ancho];
+
 	}
 	
 	public int getAlto() {

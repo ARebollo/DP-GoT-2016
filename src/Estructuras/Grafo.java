@@ -72,7 +72,7 @@ public class Grafo {
    	* @param puertaGal id de la Estacion con la Puerta de salida
    	* 
    	*/
-    public Grafo(int alto, int ancho, int puertaGal){
+    public Grafo(int alto, int ancho){
     	
     	int x,y;
         setNumNodos(alto*ancho);
@@ -391,7 +391,7 @@ public class Grafo {
 	 /**
 	  * Metodo que almacena las paredes adyacentes de cada nodo, siguiendo el orden N-E-S-O
 	  * 
-	  * @param ancho Anchura de la galaxia
+	  * @param ancho Anchura del mapa
 	  * 
 	  * @return LinkedList con parejas de enteros
 	  * 
@@ -481,14 +481,13 @@ public class Grafo {
        * Metodo que dado un inicio y final devuelve el camino entre los dos puntos de una matriz. NO DEVUELVE EL NODO ORIGEN
        * 
        * @param i Es el nodo actual, en la primera llamada es el inicial
-       * @param x Es el nodo del que viene, para no volver hacia atrás
        * @param k Es el nodo al que se desea llegar
        * @param Camino camino que se devuelve
        * 
        * @return Devuelve el camino en forma de lista de enteros
        * 
        */
-       public List<Integer> encontrarCaminoList(int i, int x, int k, List<Integer> Camino){
+       public List<Integer> encontrarCaminoList(int i, int k, List<Integer> Camino){
     	 
     	 if (Camino.isEmpty() == true)
     	 {
@@ -499,12 +498,12 @@ public class Grafo {
   		 {
   		  Camino.add(k);  
   		 }
-      	 else for (int j = 0; j < getNumNodos() && Camino.contains(k) == false; j++){
       	 
-      		 if (arcos[i][j] != Grafo.INFINITO && i != j && j != x)
+      	 else for (int j = 0; j < getNumNodos() && Camino.contains(k) == false; j++){
+      		 if (arcos[i][j] != Grafo.INFINITO && !Camino.contains(j))
       		 {
       		  Camino.add(j);
-      		  encontrarCaminoList(j,i,k,Camino);
+      		  encontrarCaminoList(j,k,Camino);
 
       	      	if (Camino.contains(k) == false)   // Quitar del camino final los que hemos ido probando y no han resultado
       	      	{
@@ -516,6 +515,41 @@ public class Grafo {
          return Camino;
        }
       
+
+       /**
+         * Metodo que devuelve todos los caminos posibles entre un inicio y un final
+         * 
+         * @param listaCam la lista de caminos que se devuelve
+         * @param i Es el nodo actual, en la primera llamada es el inicial
+         * @param k Es el nodo al que se desea llegar
+         * @param caminoAct El camino que estamos recorriendo ahora
+         * 
+         * 
+         */
+         public void encontrarListaCaminos(int i, int k, List<LinkedList<Integer>> listaCam, LinkedList<Integer> caminoAct){
+      	 
+        	 if (caminoAct.isEmpty() == true)
+        	 {
+        		 caminoAct.add(0, i); // Añadimos el origen
+        	 }
+      	 	 if (arcos[i][k] != Grafo.INFINITO )
+    		 {
+    		  caminoAct.add(k);
+    		  listaCam.add(caminoAct);
+    		  caminoAct.remove(k);
+    		 }
+        	 else for (int j = 0; j < getNumNodos() && caminoAct.contains(k) == false; j++){
+        		 if (arcos[i][j] != Grafo.INFINITO && !caminoAct.contains(j))
+        		 {
+        			 caminoAct.add(j);
+        			 encontrarListaCaminos(j,k,listaCam, caminoAct);
+        			 caminoAct.remove(caminoAct.indexOf(j));
+        			 
+        		 }   		 
+        	 }
+         }
+       
+         
      /**
       * Metodo que aplica el algoritmo de la mano derecha a la matriz de arcos, devolviendo el camino en forma de List
       *
