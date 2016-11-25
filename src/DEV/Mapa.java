@@ -16,9 +16,30 @@ public class Mapa {
 	private Queue<Llave> listaLlaveMapa;
 	private Grafo grafoMapa;
 	
+	Mapa(int alto, int ancho, int id, int prof){
+		this.alto = alto;
+		this.ancho = ancho;
+		this.id_salida = id;
+		puertaTrono = new Puerta(prof);
+		
+		//Inicializamos cada Sala con su id
+		mapaSalas = new Sala[alto][ancho];
+		for (int i = 0; i < alto; i++) {
+			for (int j = 0; j < ancho; j++) {
+				mapaSalas[i][j] = new Sala(j + ancho * i);
+			}
+		}
+		buscarSala(id_salida).setPuertaSalida(true);
+		grafoMapa = new Grafo(alto,ancho);
+		grafoMapa.procesarParedes(ancho, 1987);
+		//TODO: Crear lista de llaves del mapa
+	}
+	
 	public void simTurnoMapa(){
 		
 	}
+	
+	
 	
 	private String mapaAString(){
 		String map = "";
@@ -106,9 +127,10 @@ public class Mapa {
 		return map;
 	}
 
-	//TODO
-	public Sala buscarSala(int id){
-		return null;
+	public Sala buscarSala(int id) {
+
+		return mapaSalas[id / ancho][id % ancho];
+
 	}
 	
 	public int getAlto() {

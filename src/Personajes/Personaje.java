@@ -65,6 +65,7 @@ public abstract class Personaje {
                 haMovido = false;
                 camino = new LinkedList<dir>();
                 pilaLlave = new LinkedList<Llave>();
+                map.buscarSala(idEstacion).aniadirPj(this);
                 hallarCamino(map);
         }
         

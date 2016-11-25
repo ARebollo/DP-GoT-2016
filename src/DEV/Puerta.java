@@ -36,6 +36,22 @@ public class Puerta {
 		
 	}
 	
+	public Puerta(int prof){ // Constructor parametrizado, que utiliza el vector por defecto
+		
+		estado = false;
+		Probados = new abb<Llave>();
+		Combinacion = new abb<Llave>();
+		profundidad = prof;
+		vectorCfg = new Llave[15];
+		int pos = 0;
+		for (int i = 1;i<30;i = i+2)
+		{
+			vectorCfg[pos] = new Llave(i);
+			pos++;
+		}
+		configurarCombinacionCfg(0, vectorCfg.length-1);
+	}
+	
 	/**
    	 * Constructor parametrizado de la clase Puerta
    	 * 

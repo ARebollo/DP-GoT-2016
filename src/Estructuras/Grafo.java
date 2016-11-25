@@ -72,7 +72,7 @@ public class Grafo {
    	* @param puertaGal id de la Estacion con la Puerta de salida
    	* 
    	*/
-    public Grafo(int alto, int ancho, int puertaGal){
+    public Grafo(int alto, int ancho){
     	
     	int x,y;
         setNumNodos(alto*ancho);

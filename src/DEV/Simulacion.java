@@ -4,10 +4,10 @@ public class Simulacion {
 	Mapa mapaGOT;
 	Cargador loader;
 	
-	Simulacion(String file)
+	Simulacion(String filename)
 	{
 		loader = new Cargador();
-		loader.load(mapaGOT, file);
+		mapaGOT = loader.load(filename);
 	}
 	
 	private void simular(){
@@ -19,5 +19,9 @@ public class Simulacion {
 	public static void main (String[] args){
 		Simulacion sim = new Simulacion(args[0]);
 		sim.simular();
+	}
+	
+	public void datosaFichero(){
+		
 	}
 }
