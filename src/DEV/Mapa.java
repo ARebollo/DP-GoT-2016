@@ -2,6 +2,8 @@ package DEV;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import Estructuras.Grafo;
@@ -50,6 +52,31 @@ public class Mapa {
 		return fin;
 	}
 	
+	public int[] SalasMasFrec()
+	{
+		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
+		grafoMapa.encontrarListaCaminos(0, id_salida, listaCam, null);
+		
+		//Creamos el vector de frecuencias y lo iniciamos a 0
+		int[] frecuencias = new int[alto*ancho];
+		for(int i = 0;i<frecuencias.length;i++)
+		{
+			frecuencias[i] = 0;
+		}
+		
+		List<Integer> camino;
+		int est;
+		while(!listaCam.isEmpty())
+		{
+			camino = listaCam.remove(0);
+			while (!camino.isEmpty())
+			{
+				est = camino.remove(0);
+				frecuencias[est]++;
+			}
+		}
+		return frecuencias;
+	}
 	
 	
 	private String mapaAString(){
