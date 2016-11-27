@@ -463,7 +463,293 @@ public class Grafo {
          	 floyd();
      	 }	 
      	 	 
-       }
+      }
+       
+     /**
+   	  * a
+   	  * 
+   	  * @param b
+   	  * @param semilla Semilla para el generador de numeros aleatorios
+   	  * 
+   	  */ 
+      private void tirarParedesAtajo(int ancho, long semilla){	
+       	  
+       	 int randomInt = 0;
+       	 int n = getNumNodos() / 20; // Esto es igual al 5%
+       	 boolean atajoCreado = false;
+       	 
+       	 Random randomGenerator = new Random(semilla);  
+       		
+         randomInt = randomGenerator.nextInt(getNumNodos());
+         
+         for (int i = 0; i < n; i++){         
+             
+        	 atajoCreado = false;
+        	 
+        	 if (randomInt - ancho >= 0) // N
+        	 {
+        		 if (floydC[randomInt][randomInt-ancho] > 1) // Si el camino de X -> Y es mayor que 1, es que hay una pared entre medias
+        		 {
+        			 atajoCreado = AtajoN(ancho, randomInt, tipoCasilla(ancho, randomInt));       			 
+        		 }	
+        	 }
+             
+             if (randomInt + ancho < getNumNodos() && !atajoCreado) // S
+             {	 
+            	 if (floydC[randomInt][randomInt+ancho] > 1) 
+            	 {
+            		 atajoCreado = AtajoS(ancho, randomInt, tipoCasilla(ancho, randomInt));
+            	 }
+         	 }
+         	
+         	 if (randomInt/ancho == (randomInt-1)/ancho && randomInt-1 >= 0 && !atajoCreado) // O
+         	 {	 
+         		 if (floydC[randomInt][randomInt-1] > 1) 
+         		 {
+         			atajoCreado = AtajoO(ancho, randomInt, tipoCasilla(ancho, randomInt));
+         		 }
+         	 }
+             
+             if (randomInt/ancho == (randomInt+1)/ancho && randomInt+1 <= getNumNodos() && !atajoCreado) // E
+             {
+            	 if (floydC[randomInt][randomInt+1] > 1) 
+            	 {
+            		 atajoCreado = AtajoE(ancho, randomInt, tipoCasilla(ancho, randomInt));
+            	 }
+             }
+             	 	 
+         }
+       	     	 	 
+      }
+         
+      private boolean AtajoN(int ancho, int casilla, int tipo){	
+    	  
+    	  boolean correcto = true; 
+    	  
+    	  // Si es el borde superior o las esquinas superiores, ignorar
+    	  if (tipo == 0 || tipo == 1 || tipo == 12)
+    		  correcto = false;
+    	   
+    	  // Si esta dentro de la matriz
+    	  if (tipo == -1 && correcto){
+    		  
+    		  if (floydC[casilla][casilla-1] == 1 && floydC[casilla-ancho][casilla-ancho-1] == 1 && floydC[casilla-1][casilla-ancho-1] == 1)
+    			  correcto = false;
+    		  
+    		  if (floydC[casilla][casilla+1] == 1 && floydC[casilla-ancho][casilla-ancho+1] == 1 && floydC[casilla+1][casilla-ancho+1] == 1)
+    			  correcto = false;  		  
+    	  }
+    	  
+    	  // Si esta en el borde izq o esquina inferior izq 
+    	  if ( (tipo == 21 || tipo == 2) && correcto){
+    		  
+    		  if (floydC[casilla][casilla+1] == 1 && floydC[casilla-ancho][casilla-ancho+1] == 1 && floydC[casilla+1][casilla-ancho+1] == 1)
+    			  correcto = false;   		  
+    	  }
+    	  
+    	  // Si esta en el borde der o esquina inferior der
+    	  if ( (tipo == 15 || tipo == 3) && correcto){
+    		  
+    		  if (floydC[casilla][casilla-1] == 1 && floydC[casilla-ancho][casilla-ancho-1] == 1 && floydC[casilla-1][casilla-ancho-1] == 1)
+    			  correcto = false;  		  
+    	  }
+    	  
+    	  if (correcto){
+    		  
+    		  nuevoArco (casilla, casilla-ancho,1);
+         	  nuevoArco (casilla-ancho, casilla,1); 
+         	  floyd();
+    	  }
+    	  
+    	  return correcto;
+    	  
+    	  //TODO borrar cuando necesario
+    	  
+    	  //check x con x-1
+    	  //check x-ancho con x-ancho-1
+    	  //check x-1 con x-ancho-1
+    	  
+    	  //check x con x+1 	  
+    	  //check x-ancho con x-ancho+1 
+    	  //check x+1 con x-ancho+1
+    	  
+    	  //Si hay algun positivo en cada bloque de 3 resultado -> positivo
+    	  //Si hay un negativo en el resultado de algun bloque -> ufail
+    	  //Try again
+    	  
+    	  //Todo esto contando que sea una casilla en mitad de la nada, si esta en los bordes go fuck yourself
+    	    	  
+      }
+      
+      private boolean AtajoS(int ancho, int casilla, int tipo){	
+    	  
+    	  boolean correcto = true; 
+    	  
+    	  // Si es el borde inferior, ignorar
+    	  if (tipo == 2 || tipo == 3 || tipo == 18)
+    		  correcto = false;
+    	   
+    	  // Si esta dentro de la matriz
+    	  if (tipo == -1 && correcto){
+    		  
+    		  if (floydC[casilla][casilla-1] == 1 && floydC[casilla+ancho][casilla+ancho-1] == 1 && floydC[casilla-1][casilla+ancho-1] == 1)
+    			  correcto = false;
+    		  
+    		  if (floydC[casilla][casilla+1] == 1 && floydC[casilla-ancho][casilla+ancho+1] == 1 && floydC[casilla+1][casilla+ancho+1] == 1)
+    			  correcto = false;  		  
+    	  }
+    	  
+    	  // Si esta en el borde izq o esquina superior izq 
+    	  if ( (tipo == 21 || tipo == 0) && correcto){
+    		  
+    		  if (floydC[casilla][casilla+1] == 1 && floydC[casilla+ancho][casilla+ancho+1] == 1 && floydC[casilla+1][casilla+ancho+1] == 1)
+    			  correcto = false;   		  
+    	  }
+    	  
+    	  // Si esta en el borde der o esquina superior der
+    	  if ( (tipo == 15 || tipo == 1) && correcto){
+    		  
+    		  if (floydC[casilla][casilla-1] == 1 && floydC[casilla+ancho][casilla+ancho-1] == 1 && floydC[casilla-1][casilla+ancho-1] == 1)
+    			  correcto = false;  		  
+    	  }
+    	  
+    	  if (correcto){
+    		  
+    		  nuevoArco (casilla, casilla+ancho,1);
+         	  nuevoArco (casilla+ancho, casilla,1); 
+         	  floyd();
+    	  }
+    	  
+    	  return correcto;	  
+      }
+      
+      private boolean AtajoO(int ancho, int casilla, int tipo){	
+    	  
+    	  boolean correcto = true; 
+    	  
+    	  // Si es el borde izq, ignorar
+    	  if (tipo == 0 || tipo == 2 || tipo == 21)
+    		  correcto = false;
+    	   
+    	  // Si esta dentro de la matriz
+    	  if (tipo == -1 && correcto){
+    		  
+    		  if (floydC[casilla][casilla-ancho] == 1 && floydC[casilla-1][casilla-1-ancho] == 1 && floydC[casilla-ancho][casilla-ancho-1] == 1)
+    			  correcto = false;
+    		  
+    		  if (floydC[casilla][casilla+ancho] == 1 && floydC[casilla-1][casilla-1+ancho] == 1 && floydC[casilla+ancho][casilla+ancho-1] == 1)
+    			  correcto = false;  		  
+    	  }
+    	  
+    	  // Si esta en el borde inferior o esquina inferior der
+    	  if ( (tipo == 18 || tipo == 3) && correcto){
+    		  
+    		  if (floydC[casilla][casilla-ancho] == 1 && floydC[casilla-1][casilla-1-ancho] == 1 && floydC[casilla-ancho][casilla-ancho-1] == 1)
+    			  correcto = false;  		  
+    	  }
+    	  
+    	  // Si esta en el borde superior o esquina superior der
+    	  if ( (tipo == 12 || tipo == 1) && correcto){
+    		  
+    		  if (floydC[casilla][casilla+ancho] == 1 && floydC[casilla-1][casilla-1+ancho] == 1 && floydC[casilla+ancho][casilla+ancho-1] == 1)
+    			  correcto = false;  		  
+    	  }
+    	  
+    	  if (correcto){
+    		  
+    		  nuevoArco (casilla, casilla-1,1);
+         	  nuevoArco (casilla-1, casilla,1); 
+         	  floyd();
+    	  }
+    	  
+    	  return correcto;		  
+      }
+      
+      private boolean AtajoE(int ancho, int casilla, int tipo){	
+    	  
+    	  boolean correcto = true; 
+    	  
+    	  // Si es el borde der, ignorar
+    	  if (tipo == 1 || tipo == 3 || tipo == 15)
+    		  correcto = false;
+    	   
+    	  // Si esta dentro de la matriz
+    	  if (tipo == -1 && correcto){
+    		  
+    		  if (floydC[casilla][casilla-ancho] == 1 && floydC[casilla+1][casilla+1-ancho] == 1 && floydC[casilla-ancho][casilla-ancho+1] == 1)
+    			  correcto = false;
+    		  
+    		  if (floydC[casilla][casilla+ancho] == 1 && floydC[casilla+1][casilla+1+ancho] == 1 && floydC[casilla+ancho][casilla+ancho+1] == 1)
+    			  correcto = false;  		  
+    	  }
+    	  
+    	  // Si esta en el borde inferior o esquina inferior izq
+    	  if ( (tipo == 18 || tipo == 2) && correcto){
+    		  
+    		  if (floydC[casilla][casilla-ancho] == 1 && floydC[casilla+1][casilla+1-ancho] == 1 && floydC[casilla-ancho][casilla-ancho+1] == 1)
+    			  correcto = false; 		  
+    	  }
+    	  
+    	  // Si esta en el borde superior o esquina superior izq
+    	  if ( (tipo == 12 || tipo == 0) && correcto){
+    		  
+    		  if (floydC[casilla][casilla+ancho] == 1 && floydC[casilla+1][casilla+1+ancho] == 1 && floydC[casilla+ancho][casilla+ancho+1] == 1)
+    			  correcto = false;    		  
+    	  }
+    	  
+    	  if (correcto){
+    		  
+    		  nuevoArco (casilla, casilla+1,1);
+         	  nuevoArco (casilla+1, casilla,1); 
+         	  floyd();
+    	  }
+    	  
+    	  return correcto;		  
+      }
+      
+      private int tipoCasilla(int ancho, int casilla){
+    	  
+    	int tipo = -1;
+    	boolean esquina = false;
+    		
+    	// Comprobar esquinas
+    	
+    	if (casilla == 0)
+    		tipo = 0; // * ... -
+    				  // - ... -
+    	
+    	if (casilla == ancho-1)
+    		tipo = 1; // - ... *
+    				  // - ... -
+    	
+    	if (casilla == getNumNodos() - ancho)
+    		tipo = 2; // - ... -
+		  			  // * ... -
+    	
+  		if (casilla == getNumNodos() - 1)
+  			tipo = 3; // - ... -
+		  			  // - ... *
+  		
+  		// Comprobar laterales (formato reloj 12-15-18-21)
+  		
+  		if (!esquina && ancho > 2){
+  			
+  			if(casilla > 0 && casilla < ancho-1)
+  				tipo = 12;
+  			
+  			if(casilla % ancho == 0)
+  				tipo = 21;
+  			
+  			if(casilla % ancho-1 == 0)
+  				tipo = 15;
+  			
+  			if(casilla > getNumNodos() - ancho && casilla < getNumNodos() - 1)
+  				tipo = 18;
+  			
+  		}
+    	  
+  		return tipo;
+      }
       
      /**
    	  * Metodo para manejar los metodos relacionados con la eliminacion de paredes de manera sencilla
@@ -474,7 +760,8 @@ public class Grafo {
    	  */ 
       public void procesarParedes(int ancho, long semilla){
     	  
-    	  tirarParedesPair(almacenarParedesPair(ancho), semilla); 	  
+    	  tirarParedesPair(almacenarParedesPair(ancho), semilla); 
+    	  tirarParedesAtajo(ancho, semilla);
       }
       
      /**
@@ -1070,6 +1357,16 @@ public class Grafo {
    	 */
 	public void setNumNodos(int numNodos) {
 		this.numNodos = numNodos;
+	}
+	
+	public static void main(String[] args) {
+		
+		Grafo pepe = new Grafo(5,5);
+		
+		//pepe.mostrarFloydC();
+		//pepe.procesarParedes(5, 1987);
+		//pepe.mostrarFloydC();
+
 	}
 	
 }
