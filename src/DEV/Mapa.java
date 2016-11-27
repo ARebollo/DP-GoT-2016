@@ -34,7 +34,12 @@ public class Mapa {
 		buscarSala(id_salida).setPuertaSalida(true);
 		grafoMapa = new Grafo(alto,ancho);
 		grafoMapa.procesarParedes(ancho, 1987);
-		//TODO: Crear lista de llaves del mapa
+		for (int i = 0;i<30;i++)
+		{
+			listaLlaveMapa.add(new Llave(i));
+			if (i%2 != 0)
+				listaLlaveMapa.add(new Llave(i));
+		}
 	}
 	
 	public boolean simTurnoMapa(){
@@ -239,8 +244,7 @@ public class Mapa {
 	}
 
 	public boolean finJuego() {
-		// TODO Auto-generated method stub
-		return false;
+		return puertaTrono.isEstado();
 	}
 
 	public String toString(){

@@ -7,29 +7,308 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 
 import Estructuras.Llave;
+import Excepciones.ConfigNoValida;
 import Personajes.Personaje;
 
 public class Simulacion {
 	Mapa mapaGOT;
 	Cargador loader;
+	int turno;
 	
-	Simulacion(String filename)
+	Simulacion(String filename) throws IOException, ConfigNoValida
 	{
 		loader = new Cargador();
 		mapaGOT = loader.load(filename);
+		turno = 0;
 	}
 	
-	private void simular(){
+	private void simular() throws IOException{
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("registro.log", true)));
+		datosInicial(out);
 		boolean fin = false;
-		for (int i = 0;i < 50 && !fin; i++)
+		while (turno< 50 && !fin)
+		{
 			fin = mapaGOT.simTurnoMapa();
+			if (!fin)
+			{
+				datosAFichero(out);
+				mostrarTurno();
+			}
+			else
+			{
+				mostrarFin();
+				datosFin(out);
+			}
+			turno++;
+		}
+		out.close();
 	}
 	
 	
-	public static void main (String[] args){
-		Simulacion sim = new Simulacion(args[0]);
-		sim.simular();
+	private void datosInicial(PrintWriter out) {
+		Personaje persAux;
+		out.print(mapaGOT);
+		Iterator<Personaje> it = mapaGOT.buscarSala(0).getColaPers().iterator(); 
+		/* Para los Stark */
+
+		while (it.hasNext() == true) {
+
+			persAux = it.next();
+			out.println("(ruta:" + persAux.getMarcaId() + ":" + persAux.mostrarCamino() + ")");
+		}
+
+		it = mapaGOT.buscarSala(mapaGOT.getAlto() * mapaGOT.getAncho() - mapaGOT.getAncho()).getColaPers().iterator(); 
+		/* Para los Targaryen */
+		while (it.hasNext() == true) {
+
+			persAux = it.next();
+			out.println("(ruta:" + persAux.getMarcaId() + ":" + persAux.mostrarCamino() + ")");
+		}
+
+		it = mapaGOT.buscarSala(mapaGOT.getId_salida()).getColaPers().iterator(); 
+		/* Para los Lannister */
+
+
+		while (it.hasNext() == true) {
+
+			persAux = it.next();
+			out.println("(ruta:" + persAux.getMarcaId() + ":" + persAux.mostrarCamino() + ")");
+		}
+		
+		it = mapaGOT.buscarSala(mapaGOT.getAncho()).getColaPers().iterator(); 
+		/* Para los Caminantes */
+
+
+		while (it.hasNext() == true) {
+
+			persAux = it.next();
+			out.println("(ruta:" + persAux.getMarcaId() + ":" + persAux.mostrarCamino() + ")");
+		}
 	}
+
+	private void mostrarTurno() {
+
+		System.out.println();
+		System.out.println("(turno:" + turno + ")");
+		System.out.println("(galaxia:" + (mapaGOT.getAlto() * mapaGOT.getAncho() - 1) + ")");
+
+		System.out.print("(puerta:");
+		if (mapaGOT.finJuego() == true) {
+			System.out.print("abierta:" + mapaGOT.getPuertaTrono().getProfundidad() + ":");
+			mapaGOT.getPuertaTrono().getProbados().inOrder();
+			System.out.print(")");
+		} else {
+			System.out.print("cerrada:" + mapaGOT.getPuertaTrono().getProfundidad() + ":");
+			mapaGOT.getPuertaTrono().getProbados().inOrder();
+			System.out.print(")");
+		}
+
+		// ------------------------------------
+		// Mostrar el mapa de la Galaxia
+		// ------------------------------------
+
+		System.out.println(mapaGOT);
+		mostrarMapa();
+
+		// ------------------------------------
+		// Mostrar estaciones con midiclorianos
+		// ------------------------------------
+
+		System.out.println();
+
+		for (int i = 0; i < mapaGOT.getAlto(); i++) {
+
+			for (int j = 0; j < mapaGOT.getAncho(); j++) {
+
+				if (mapaGOT.buscarSala(i*j + j).hayLlaves() == true) {
+					System.out.print("(estacion:" + (i*j + j) + ": ");
+					mapaGOT.buscarSala(i*j + j).mostrarLista();
+					System.out.print(")");
+
+					System.out.println();
+				}
+			}
+		}
+
+		// ------------------------------------
+		// Mostrar personajes en la galaxia
+		// ------------------------------------
+
+		for (int i = 0; i < mapaGOT.getAlto(); i++) {
+
+			for (int j = 0; j < mapaGOT.getAncho(); j++) {
+
+				mapaGOT.buscarSala(i*j + j).mostrarPersonajes();
+			}
+		}
+	}
+
+	private void mostrarMapa() {
+		System.out.print(mapaGOT);
+	}
+
+	private void mostrarFin() {
+
+		System.out.println();
+		System.out.println("---------------------------");
+		System.out.println("La simulación ha terminado|");
+		System.out.println("---------------------------");
+
+		System.out.println("La puerta de salida se encontraba en la estación " + mapaGOT.getId_salida());
+
+		System.out.print("Estado de la puerta: ");
+		if (mapaGOT.finJuego() == true) {
+			System.out.println("ABIERTA");
+		} else {
+			System.out.println("CERRADA");
+		}
+
+		System.out.print("La combinación es:");
+		mapaGOT.getPuertaTrono().mostrarVectorCfg();
+		System.out.println(" y su profundidad es " + mapaGOT.getPuertaTrono().getProfundidad());
+		System.out.print("Se han probado los midiclorianos: ");
+		mapaGOT.getPuertaTrono().getProbados().inOrder();
+		System.out.println();
+
+		// ----------------------
+		// Mostrando tablero final
+		// ----------------------
+		System.out.println("El tablero al finalizar la simulación es el siguiente:");
+
+		System.out.println(mapaGOT);
+
+		// ----------------------
+		// Mostrando estaciones
+		// ----------------------
+		System.out.println("Id Estación | Midiclorianos restantes");
+
+		for (int i = 0; i < mapaGOT.getAlto(); i++) {
+
+			for (int j = 0; j < mapaGOT.getAncho(); j++) {
+
+				if (mapaGOT.buscarSala(i*j + j).hayLlaves() == true) {
+					System.out.print("     " + (i*j + j) + "      | ");
+					mapaGOT.buscarSala(i*j + j).mostrarLista();
+					System.out.println();
+				}
+			}
+		}
+
+		// ----------------------
+		// Mostrando personajes
+		// ----------------------
+		System.out.println();
+		System.out.println("Personajes:");
+		System.out.println("-------------------------------------------");
+
+		for (int i = 0; i < mapaGOT.getAlto(); i++) {
+
+			for (int j = 0; j < mapaGOT.getAncho(); j++) {
+
+				mapaGOT.buscarSala(i*j + j).mostrarPersonajes();
+			}
+		}
+
+		System.out.println("");
+		System.out.println("-------------------------------------------");
+
+		// ----------------------
+		// Mostrando ganadores
+		// ----------------------
+		System.out.println();
+		System.out.println("Ganadores:");
+		System.out.println("-------------------------------------------");
+
+		if (mapaGOT.finJuego() == true) {
+			System.out.println("Ganador/es: ");
+			mapaGOT.buscarSala(mapaGOT.getId_salida()).mostrarGanadoresAbierta();
+		}
+		System.out.println("");
+		System.out.println("-------------------------------------------");
+	}
+	
+
+	private void datosFin(PrintWriter out) {
+
+		out.println();
+		out.println("---------------------------");
+		out.println("La simulación ha terminado|");
+		out.println("---------------------------");
+
+		out.println("La puerta de salida se encontraba en la estación " + mapaGOT.getId_salida());
+
+		out.print("Estado de la puerta: ");
+		if (mapaGOT.finJuego() == true) {
+			out.println("ABIERTA");
+		} else {
+			out.println("CERRADA");
+		}
+
+		out.print("La combinación es:");
+		mapaGOT.getPuertaTrono().mostrarVectorCfg();
+		out.println(" y su profundidad es " + mapaGOT.getPuertaTrono().getProfundidad());
+		out.print("Se han probado los midiclorianos: ");
+		mapaGOT.getPuertaTrono().getProbados().inOrder();
+		out.println();
+
+		// ----------------------
+		// Mostrando tablero final
+		// ----------------------
+		out.println("El tablero al finalizar la simulación es el siguiente:");
+
+		out.println(mapaGOT);
+
+		// ----------------------
+		// Mostrando estaciones
+		// ----------------------
+		out.println("Id Estación | Midiclorianos restantes");
+
+		for (int i = 0; i < mapaGOT.getAlto(); i++) {
+
+			for (int j = 0; j < mapaGOT.getAncho(); j++) {
+
+				if (mapaGOT.buscarSala(i*j + j).hayLlaves() == true) {
+					out.print("     " + (i*j + j) + "      | ");
+					mapaGOT.buscarSala(i*j + j).mostrarLista();
+					out.println();
+				}
+			}
+		}
+
+		// ----------------------
+		// Mostrando personajes
+		// ----------------------
+		out.println();
+		out.println("Personajes:");
+		out.println("-------------------------------------------");
+
+		for (int i = 0; i < mapaGOT.getAlto(); i++) {
+
+			for (int j = 0; j < mapaGOT.getAncho(); j++) {
+
+				mapaGOT.buscarSala(i*j + j).mostrarPersonajes();
+			}
+		}
+
+		out.println("");
+		out.println("-------------------------------------------");
+
+		// ----------------------
+		// Mostrando ganadores
+		// ----------------------
+		out.println();
+		out.println("Ganadores:");
+		out.println("-------------------------------------------");
+
+		if (mapaGOT.finJuego() == true) {
+			out.println("Ganador/es: ");
+			mapaGOT.buscarSala(mapaGOT.getId_salida()).mostrarGanadoresAbierta();
+		}
+		out.println("");
+		out.println("-------------------------------------------");
+	}
+
+	
 	
 	/**
 	 * Metodo para almacenar los datos de un turno en el archivo de registro
@@ -43,65 +322,23 @@ public class Simulacion {
 	 * @throws IOException
 	 * 
 	 */
-	private void datosAFichero(int turno, boolean mapaInicial) throws IOException {
+	private void datosAFichero(PrintWriter out) throws IOException {
 		//TODO: No necesario en esta entrega
 		/* Iniciar flujo (true añade datos al final) */
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("registro.log", true))); 
+		 
 		Personaje persAux; // Para extraer datos de los personajes
-
-		if (mapaInicial == false) {
-
-			if (turno == 0) // Imprimir todos los caminos de los personajes al
-							// comienzo de la simulacion
-			{
-				Iterator<Personaje> it = mapaGOT.buscarSala(0).getColaPers().iterator(); // Para
-																						// los
-																						// JEDI
-																						// y
-																						// FR
-
-				while (it.hasNext() == true) {
-
-					persAux = it.next();
-					out.println("(ruta:" + persAux.getMarcaId() + ":" + persAux.mostrarCamino() + ")");
-				}
-
-				it = buscarEstacion(alto * ancho - ancho).getColaPers().iterator(); // Para
-																					// los
-																					// Contrabandistas
-
-				while (it.hasNext() == true) {
-
-					persAux = it.next();
-					out.println("(ruta:" + persAux.getMarcaId() + ":" + persAux.mostrarCamino() + ")");
-				}
-
-				it = buscarEstacion(alto * ancho - 1).getColaPers().iterator(); // Para
-																				// los
-																				// Imperiales
-
-				while (it.hasNext() == true) {
-
-					persAux = it.next();
-					out.println("(ruta:" + persAux.getMarcaId() + ":" + persAux.mostrarCamino() + ")");
-				}
-
-			}
-
-			if (finJuego() == false) {
-
 				out.println("===============================================");
 				out.println("(turno:" + turno + ")");
-				out.println("(galaxia:" + (alto * ancho - 1) + ")");
+				out.println("(galaxia:" + (mapaGOT.getAlto() * mapaGOT.getAncho() - 1) + ")");
 
 				out.print("(puerta:");
-				if (puertaGal.isEstado() == true) {
-					out.print("abierta:" + puertaGal.getProfundidad() + ":");
-					out.print(puertaGal.getProbados().arbolAString());
+				if (mapaGOT.finJuego() == true) {
+					out.print("abierta:" + mapaGOT.getPuertaTrono().getProfundidad() + ":");
+					out.print(mapaGOT.getPuertaTrono().getProbados().arbolAString());
 					out.print(")");
 				} else {
-					out.print("cerrada:" + puertaGal.getProfundidad() + ":");
-					out.print(puertaGal.getProbados().arbolAString());
+					out.print("cerrada:" + mapaGOT.getPuertaTrono().getProfundidad() + ":");
+					out.print(mapaGOT.getPuertaTrono().getProbados().arbolAString());
 					out.print(")");
 				}
 
@@ -109,7 +346,7 @@ public class Simulacion {
 				// Mostrar el mapa de la Galaxia
 				// ------------------------------------
 
-				mapaAFichero(out);
+				out.print(mapaGOT);
 
 				// ------------------------------------
 				// Mostrar estaciones con midiclorianos
@@ -117,14 +354,14 @@ public class Simulacion {
 
 				out.println();
 
-				for (int i = 0; i < alto; i++) {
+				for (int i = 0; i < mapaGOT.getAlto(); i++) {
 
-					for (int j = 0; j < ancho; j++) {
+					for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-						Iterator<Midi> it = listaEstaciones[i][j].getListaMidiEst().iterator();
+						Iterator<Llave> it = mapaGOT.buscarSala(i*j + j).getlistaLlaveSala().iterator();
 
 						if (it.hasNext() == true) {
-							out.print("(estacion:" + listaEstaciones[i][j].getId() + ": ");
+							out.print("(estacion:" + (i*j + j) + ": ");
 
 							while (it.hasNext() == true) {
 
@@ -141,11 +378,11 @@ public class Simulacion {
 				// Mostrar personajes en la galaxia
 				// ------------------------------------
 
-				for (int i = 0; i < alto; i++) {
+				for (int i = 0; i < mapaGOT.getAlto(); i++) {
 
-					for (int j = 0; j < ancho; j++) {
+					for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-						Iterator<Personaje> it = listaEstaciones[i][j].getColaPers().iterator();
+						Iterator<Personaje> it = mapaGOT.buscarSala(i*j + j).getColaPers().iterator();
 
 						while (it.hasNext() == true) {
 
@@ -153,17 +390,19 @@ public class Simulacion {
 						}
 					}
 				}
-
-				out.close(); // Cerrar flujo
-			} else // Si ha terminado la simulacion, imprimir lo siguiente
-			{
-				finAFichero(out);
-				out.close(); // Cerrar flujo
-			}
-
-		} else {
-			mapaAFichero(out);
-			out.close();
+	}
+	
+	public static void main (String[] args){
+		Simulacion sim;
+		try {
+			sim = new Simulacion(args[0]);
+			sim.simular();
+		} catch (IOException e) {
+			System.out.println("Error de archivo");
+			e.printStackTrace();
+		} catch (ConfigNoValida e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
