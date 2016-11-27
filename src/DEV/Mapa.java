@@ -8,6 +8,8 @@ import java.util.Queue;
 
 import Estructuras.Grafo;
 import Estructuras.Llave;
+import Personajes.Personaje;
+import Personajes.Stark;
 
 public class Mapa {
 	private int alto;
@@ -23,6 +25,7 @@ public class Mapa {
 		this.ancho = ancho;
 		this.id_salida = id;
 		puertaTrono = new Puerta(prof);
+		listaLlaveMapa = new LinkedList<Llave>();
 		
 		//Inicializamos cada Sala con su id
 		mapaSalas = new Sala[alto][ancho];
@@ -155,7 +158,7 @@ public class Mapa {
 				}
 
 				if (arcoBajo == false)
-					map = map + ' '; // Imprimir antes de comprobar arcos a la
+					map = map + '_'; // Imprimir antes de comprobar arcos a la
 									// der, por errores de espacio
 
 				x = 0;
@@ -251,5 +254,10 @@ public class Mapa {
 		return this.mapaAString();
 	}
 
+	public static void main(String[] args)
+	{
+
+	}
+	
 }
 

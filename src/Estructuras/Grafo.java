@@ -563,8 +563,6 @@ public class Grafo {
     	  
     	  return correcto;
     	  
-    	  //TODO borrar cuando necesario
-    	  
     	  //check x con x-1
     	  //check x-ancho con x-ancho-1
     	  //check x-1 con x-ancho-1
