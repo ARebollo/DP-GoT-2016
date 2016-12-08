@@ -20,14 +20,14 @@ public abstract class Personaje {
        
         enum dir {N, S, E, O};
        
-        private String nombrePersonaje;
-        private int idSala;
-        private char marcaId;
-        private int turno;
-        private int turnoActual;
-        private boolean haMovido; //Indica si el personaje ha actuado este turno o no
-        private Queue<dir> camino;
-        private LinkedList<Llave> pilaLlave;
+        protected String nombrePersonaje;
+        protected int idSala;
+        protected char marcaId;
+        protected int turno;
+        protected int turnoActual;
+        protected boolean haMovido; //Indica si el personaje ha actuado este turno o no
+        protected Queue<dir> camino;
+        protected LinkedList<Llave> pilaLlave;
         
        /**
         * Constructor default de la clase Personaje
@@ -352,7 +352,7 @@ public abstract class Personaje {
 		 * @return Entero que señala la id de la Estacion destino
 		 * 
 		 */
-		private int dirACamino(dir direccion, int ancho){
+		protected int dirACamino(dir direccion, int ancho){
 			
 			int sig = 0;
 			
@@ -405,26 +405,21 @@ public abstract class Personaje {
 			if (map.getId_salida() == idSala)	//Si la estacion en la que se encuentra el pj es la de salida, interactuar con la puerta, y si queda camino, moverse al que indica
 			{
 				tocarPuerta(map.getPuertaTrono());
-			 	if (camino.peek() != null)
-			 	{
-			 		map.buscarSala(dirACamino(camino.peek(), map.getAncho())).aniadirPj(this);  // Obtiene el camino del pj, busca la estacion con esa id y luego añade el personaje
-			 		setidSala(dirACamino(camino.remove(), map.getAncho()));
-			 	}
-			 	else map.buscarSala(idSala).aniadirPj(this);
+				moverse(map);
 			}
 			else
 			{
-				map.buscarSala(dirACamino(camino.peek(), map.getAncho())).aniadirPj(this);  // Obtiene el camino del pj, busca la estacion con esa id y luego añade el personaje
-				setidSala(dirACamino(camino.remove(), map.getAncho()));
-			 
-				tocarLlave(map.buscarSala(idSala));
+				moverse(map);
+				accionPersonaje(map.buscarSala(idSala));
 			}
 		}
 		
 		//Realiza la accion apropiada para cada pj, es llamado por mover
 		protected abstract void tocarPuerta(Puerta puertamap);
 		
-		protected abstract void tocarLlave(Sala sala);
+		protected abstract void moverse(Mapa map);
+		
+		protected abstract void accionPersonaje(Sala sala);
 
 		// To
 		

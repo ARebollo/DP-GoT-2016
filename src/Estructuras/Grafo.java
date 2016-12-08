@@ -1,5 +1,6 @@
 package Estructuras;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -815,13 +816,13 @@ public class Grafo {
       	 
         	 if (caminoAct.isEmpty() == true)
         	 {
-        		 caminoAct.add(0, i); // Añadimos el origen
+        		 caminoAct.add(i); // Añadimos el origen
         	 }
       	 	 if (arcos[i][k] != Grafo.INFINITO )
     		 {
     		  caminoAct.add(k);
-    		  listaCam.add(caminoAct);
-    		  caminoAct.remove(k);
+    		  listaCam.add(new LinkedList<Integer>(caminoAct));
+    		  caminoAct.removeLast();
     		 }
         	 else for (int j = 0; j < getNumNodos() && caminoAct.contains(k) == false; j++){
         		 if (arcos[i][j] != Grafo.INFINITO && !caminoAct.contains(j))
@@ -1359,12 +1360,19 @@ public class Grafo {
 	
 	public static void main(String[] args) {
 		
-		Grafo pepe = new Grafo(5,5);
-		
-		//pepe.mostrarFloydC();
-		//pepe.procesarParedes(5, 1987);
-		//pepe.mostrarFloydC();
+		Grafo pepe = new Grafo(6,6);
+		pepe.procesarParedes(6, 1987);
 
+		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
+		pepe.encontrarListaCaminos(0, 35, listaCam, new LinkedList<Integer>());
+		System.out.println(listaCam.size());
+		Iterator<LinkedList<Integer>> it = listaCam.iterator();
+		LinkedList<Integer> aux;
+		while(it.hasNext())
+		{
+			aux = it.next();
+			System.out.println(aux);
+		}
 	}
 	
 }

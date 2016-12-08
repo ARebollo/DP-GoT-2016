@@ -1,8 +1,12 @@
 package Personajes;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import DEV.Mapa;
 import DEV.Puerta;
 import DEV.Sala;
+import Estructuras.Grafo;
 
 public class Stark extends Personaje{
 	
@@ -15,7 +19,20 @@ public class Stark extends Personaje{
 
 	@Override
 	protected void hallarCamino(Mapa map) {
-		// TODO Auto-generated method stub
+		List<Integer> listaAux = new LinkedList<Integer>();
+		Grafo grafoAux = map.getGrafoMapa();
+		
+		listaAux = grafoAux.encontrarCaminoList(0, map.getId_salida(), listaAux);
+		
+		int dirAnt = listaAux.remove(0);
+		int dirSig;
+		
+		while (listaAux.isEmpty() == false) {
+			
+			dirSig = listaAux.remove(0);
+			aniadirCamino(interpretarCamino(dirAnt,dirSig));
+			dirAnt = dirSig;
+		}
 		
 	}
 
@@ -26,9 +43,24 @@ public class Stark extends Personaje{
 		 puertamap.probarLlave(sacarLlave());	
 		}
 	}
+	
+	@Override
+	protected void moverse(Mapa map)
+	{
+		if (camino.peek() == null)
+		{
+			map.buscarSala(idSala).aniadirPj(this);
+		}
+		else 
+		{
+			map.buscarSala(dirACamino(camino.peek(), map.getAncho())).aniadirPj(this);  // Obtiene el camino del pj, busca la estacion con esa id y luego añade el personaje
+			setidSala(dirACamino(camino.remove(), map.getAncho()));
+		}
+ 		
+	}
 
 	@Override
-	protected void tocarLlave(Sala sala) {
+	protected void accionPersonaje(Sala sala) {
 		if (sala.hayLlaves())
 		{
 		 aniadirLlave(sala.sacarLlave());

@@ -256,7 +256,8 @@ public class Mapa {
 
 	public static void main(String[] args)
 	{
-
+		Mapa Map = new Mapa(6,6,35,5);
+		System.out.println(Map);
 	}
 	
 }
