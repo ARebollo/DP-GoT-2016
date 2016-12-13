@@ -1,15 +1,13 @@
 package DEV;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 import Estructuras.Grafo;
 import Estructuras.Llave;
-import Personajes.Personaje;
-import Personajes.Stark;
+import Estructuras.Pair;
+
 
 public class Mapa {
 	private int alto;
@@ -63,7 +61,7 @@ public class Mapa {
 	public Integer[] SalasMasFrec()
 	{
 		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
-		grafoMapa.encontrarListaCaminos(0, id_salida, listaCam, null);
+		grafoMapa.encontrarListaCaminos(0, id_salida, listaCam, new LinkedList<Integer>());
 		
 		//Creamos el vector de frecuencias y lo iniciamos a 0
 		int[] frecuencias = new int[alto*ancho];
@@ -83,24 +81,31 @@ public class Mapa {
 				frecuencias[est]++;
 			}
 		}
-		Integer[] SalasConLlaves = new Integer[9];
-		int max = 0;
-		for (int i = 0; i<9;i++)
-		{
-			for (int j = 0;j<frecuencias.length;j++)
+		//En el primer elemento se guarda el número de sala, en el segundo la frecuencia
+		List<Pair<Integer, Integer>> SalasLlaves = new LinkedList<Pair<Integer, Integer>>();
+		
+		boolean auxInt = false;
+			for (int i = 0;i<frecuencias.length;i++)
 			{
-				if (frecuencias[j] > max)
+				auxInt = false;
+				if (SalasLlaves.size() < 9)
 				{
-					if (SalasConLlaves[i] != 0)
-					{
-						frecuencias[SalasConLlaves[i]] = max;
-					}
-					max = frecuencias[j];
-					SalasConLlaves[i] = j;
-					frecuencias[j] = 0;
+					SalasLlaves.add(new Pair<Integer,Integer>(i,frecuencias[i]));
+					auxInt= true;
 				}
-				
+				for (int j = 0;j<SalasLlaves.size() && !auxInt;j++)
+				{
+					if (frecuencias[i] > SalasLlaves.get(j).getSecond())
+					{
+						SalasLlaves.set(j, new Pair<Integer,Integer>(i, frecuencias[i]));
+						auxInt = true;
+					}
+				}
 			}
+		Integer[] SalasConLlaves = new Integer[9];
+		for (int i = 0;i<9;i++)
+		{
+			SalasConLlaves[i] = SalasLlaves.get(i).getFirst();
 		}
 		return SalasConLlaves;
 	}
