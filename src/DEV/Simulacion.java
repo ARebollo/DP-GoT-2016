@@ -23,9 +23,12 @@ public class Simulacion {
 	}
 	
 	private void simular() throws IOException{
+		
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("registro.log", true)));
 		datosInicial(out);
+		
 		boolean fin = false;
+		
 		while (turno< 50 && !fin)
 		{
 			fin = mapaGOT.simTurnoMapa();
@@ -120,9 +123,9 @@ public class Simulacion {
 
 			for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-				if (mapaGOT.buscarSala(i*j + j).hayLlaves() == true) {
-					System.out.print("(estacion:" + (i*j + j) + ": ");
-					mapaGOT.buscarSala(i*j + j).mostrarLista();
+				if (mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).hayLlaves() == true) {
+					System.out.print("(estacion:" + (i*mapaGOT.getAncho() + j) + ": ");
+					mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).mostrarLista();
 					System.out.print(")");
 
 					System.out.println();
@@ -138,7 +141,7 @@ public class Simulacion {
 
 			for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-				mapaGOT.buscarSala(i*j + j).mostrarPersonajes();
+				mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).mostrarPersonajes();
 			}
 		}
 	}
@@ -186,9 +189,9 @@ public class Simulacion {
 
 			for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-				if (mapaGOT.buscarSala(i*j + j).hayLlaves() == true) {
-					System.out.print("     " + (i*j + j) + "      | ");
-					mapaGOT.buscarSala(i*j + j).mostrarLista();
+				if (mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).hayLlaves() == true) {
+					System.out.print("     " + (i*mapaGOT.getAncho() + j) + "      | ");
+					mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).mostrarLista();
 					System.out.println();
 				}
 			}
@@ -205,7 +208,7 @@ public class Simulacion {
 
 			for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-				mapaGOT.buscarSala(i*j + j).mostrarPersonajes();
+				mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).mostrarPersonajes();
 			}
 		}
 
@@ -267,9 +270,9 @@ public class Simulacion {
 
 			for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-				if (mapaGOT.buscarSala(i*j + j).hayLlaves() == true) {
-					out.print("     " + (i*j + j) + "      | ");
-					mapaGOT.buscarSala(i*j + j).mostrarLista();
+				if (mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).hayLlaves() == true) {
+					out.print("     " + (i*mapaGOT.getAncho() + j) + "      | ");
+					mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).mostrarLista();
 					out.println();
 				}
 			}
@@ -286,7 +289,7 @@ public class Simulacion {
 
 			for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-				mapaGOT.buscarSala(i*j + j).mostrarPersonajes();
+				mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).mostrarPersonajes();
 			}
 		}
 
@@ -358,10 +361,10 @@ public class Simulacion {
 
 					for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-						Iterator<Llave> it = mapaGOT.buscarSala(i*j + j).getlistaLlaveSala().iterator();
+						Iterator<Llave> it = mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).getlistaLlaveSala().iterator();
 
 						if (it.hasNext() == true) {
-							out.print("(estacion:" + (i*j + j) + ": ");
+							out.print("(estacion:" + (i*mapaGOT.getAncho() + j) + ": ");
 
 							while (it.hasNext() == true) {
 
@@ -382,7 +385,7 @@ public class Simulacion {
 
 					for (int j = 0; j < mapaGOT.getAncho(); j++) {
 
-						Iterator<Personaje> it = mapaGOT.buscarSala(i*j + j).getColaPers().iterator();
+						Iterator<Personaje> it = mapaGOT.buscarSala(i*mapaGOT.getAncho() + j).getColaPers().iterator();
 
 						while (it.hasNext() == true) {
 

@@ -3,6 +3,7 @@ package DEV;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
 
 import Estructuras.Grafo;
 import Estructuras.Llave;
@@ -25,21 +26,45 @@ public class Mapa {
 		puertaTrono = new Puerta(prof);
 		listaLlaveMapa = new LinkedList<Llave>();
 		
-		//Inicializamos cada Sala con su id
+		//Inicializamos cada Sala con su id	
 		mapaSalas = new Sala[alto][ancho];
 		for (int i = 0; i < alto; i++) {
 			for (int j = 0; j < ancho; j++) {
 				mapaSalas[i][j] = new Sala(j + ancho * i);
 			}
 		}
+		
 		buscarSala(id_salida).setPuertaSalida(true);
+		
+		// Crear el grafo del Mapa
+		Random randomGenerator = new Random(1987);  
+   	  		
 		grafoMapa = new Grafo(alto,ancho);
-		grafoMapa.procesarParedes(ancho, 1987);
+		grafoMapa.procesarParedes(ancho, randomGenerator);
+		
+		// Imprimir el mapa antes de generar los atajos
+		System.out.println(this);
+		
+		// Tirar los atajos
+		grafoMapa.tirarParedesAtajo(ancho, randomGenerator);
+		
+		// Almacenar las llaves
 		for (int i = 0;i<30;i++)
-		{
+		{		
 			listaLlaveMapa.add(new Llave(i));
 			if (i%2 != 0)
 				listaLlaveMapa.add(new Llave(i));
+		}
+		
+		// Repartir llaves
+		Integer[] repartirLlaves = SalasMasFrec(); 
+		
+		for (int i = 0; i<9; i++){
+			
+			for (int j = 0; i<5; i++){
+				
+				buscarSala(repartirLlaves[i]).aniadirLlave(listaLlaveMapa.poll());
+			}			
 		}
 	}
 	
@@ -84,14 +109,14 @@ public class Mapa {
 		//En el primer elemento se guarda el número de sala, en el segundo la frecuencia
 		List<Pair<Integer, Integer>> SalasLlaves = new LinkedList<Pair<Integer, Integer>>();
 		
-		boolean auxInt = false;
+		boolean auxInt = false; // Si ya se ha insertado
 			for (int i = 0;i<frecuencias.length;i++)
 			{
 				auxInt = false;
 				if (SalasLlaves.size() < 9)
 				{
 					SalasLlaves.add(new Pair<Integer,Integer>(i,frecuencias[i]));
-					auxInt= true;
+					auxInt= true;  
 				}
 				for (int j = 0;j<SalasLlaves.size() && !auxInt;j++)
 				{
@@ -102,7 +127,11 @@ public class Mapa {
 					}
 				}
 			}
+			
 		Integer[] SalasConLlaves = new Integer[9];
+		
+		// TODO ordenar de mayor a menor el vector
+		
 		for (int i = 0;i<9;i++)
 		{
 			SalasConLlaves[i] = SalasLlaves.get(i).getFirst();
@@ -122,8 +151,8 @@ public class Mapa {
 		map = map + '\n';
 		map = map + " ";
 
-		for (int i = 0; i < (ancho * 2) - 1; i++) {
-			map = map + '_';
+		for (int i = 0; i < (ancho); i++) {
+			map = map + "_ ";
 		}
 		map = map + '\n';
 
@@ -261,7 +290,7 @@ public class Mapa {
 
 	public static void main(String[] args)
 	{
-		Mapa Map = new Mapa(6,6,35,5);
+		Mapa Map = new Mapa(6,10,59,5);
 		System.out.println(Map);
 	}
 	

@@ -435,13 +435,13 @@ public class Grafo {
  	  * @param semilla Semilla para el generador de numeros aleatorios
  	  * 
  	  */ 
-       private void tirarParedesPair(LinkedList<Pair<Integer,Integer>> lista, long semilla){	
+       private void tirarParedesPair(LinkedList<Pair<Integer,Integer>> lista, Random randomGenerator){	
      	  
      	 Pair<Integer,Integer> aux;
      	 int x = 0;
      	 int y = 0;
      	 int randomInt = 0;
-     	 Random randomGenerator = new Random(semilla);  
+     	 
      	 
      	 while (lista.isEmpty() == false){
      		
@@ -473,17 +473,15 @@ public class Grafo {
    	  * @param semilla Semilla para el generador de numeros aleatorios
    	  * 
    	  */ 
-      private void tirarParedesAtajo(int ancho, long semilla){	
+      public void tirarParedesAtajo(int ancho, Random randomGenerator){	
        	  
        	 int randomInt = 0;
        	 int n = getNumNodos() / 20; // Esto es igual al 5%
        	 boolean atajoCreado = false;
        	 
-       	 Random randomGenerator = new Random(semilla);  
-       		
-         randomInt = randomGenerator.nextInt(getNumNodos());
-         
-         for (int i = 0; i < n; i++){         
+         for (int i = 0; i < n;){  
+        	 
+        	 randomInt = randomGenerator.nextInt(getNumNodos());
              
         	 atajoCreado = false;
         	 
@@ -491,7 +489,9 @@ public class Grafo {
         	 {
         		 if (floydC[randomInt][randomInt-ancho] > 1) // Si el camino de X -> Y es mayor que 1, es que hay una pared entre medias
         		 {
-        			 atajoCreado = AtajoN(ancho, randomInt, tipoCasilla(ancho, randomInt));       			 
+        			 if (atajoCreado = AtajoN(ancho, randomInt, tipoCasilla(ancho, randomInt))){
+        					 i++;
+        			 }
         		 }	
         	 }
              
@@ -499,7 +499,9 @@ public class Grafo {
              {	 
             	 if (floydC[randomInt][randomInt+ancho] > 1) 
             	 {
-            		 atajoCreado = AtajoS(ancho, randomInt, tipoCasilla(ancho, randomInt));
+            		 if (atajoCreado = AtajoS(ancho, randomInt, tipoCasilla(ancho, randomInt))){
+    					 i++;
+            	 	}
             	 }
          	 }
          	
@@ -507,7 +509,9 @@ public class Grafo {
          	 {	 
          		 if (floydC[randomInt][randomInt-1] > 1) 
          		 {
-         			atajoCreado = AtajoO(ancho, randomInt, tipoCasilla(ancho, randomInt));
+         			 if (atajoCreado = AtajoO(ancho, randomInt, tipoCasilla(ancho, randomInt))){
+         				 i++;
+         		 	}
          		 }
          	 }
              
@@ -515,12 +519,12 @@ public class Grafo {
              {
             	 if (floydC[randomInt][randomInt+1] > 1) 
             	 {
-            		 atajoCreado = AtajoE(ancho, randomInt, tipoCasilla(ancho, randomInt));
+            		 if (atajoCreado = AtajoE(ancho, randomInt, tipoCasilla(ancho, randomInt))){
+    					 i++;
+            	 	}
             	 }
-             }
-             	 	 
-         }
-       	     	 	 
+             }        	 	 
+         }    	     	 	 
       }
          
       private boolean AtajoN(int ancho, int casilla, int tipo){	
@@ -528,8 +532,9 @@ public class Grafo {
     	  boolean correcto = true; 
     	  
     	  // Si es el borde superior o las esquinas superiores, ignorar
-    	  if (tipo == 0 || tipo == 1 || tipo == 12)
+    	  if (tipo == 0 || tipo == 1 || tipo == 12 || tipo == 18){
     		  correcto = false;
+    	  }
     	   
     	  // Si esta dentro de la matriz
     	  if (tipo == -1 && correcto){
@@ -538,21 +543,21 @@ public class Grafo {
     			  correcto = false;
     		  
     		  if (floydC[casilla][casilla+1] == 1 && floydC[casilla-ancho][casilla-ancho+1] == 1 && floydC[casilla+1][casilla-ancho+1] == 1)
-    			  correcto = false;  		  
+    			  correcto = false;  	  
     	  }
     	  
     	  // Si esta en el borde izq o esquina inferior izq 
     	  if ( (tipo == 21 || tipo == 2) && correcto){
     		  
     		  if (floydC[casilla][casilla+1] == 1 && floydC[casilla-ancho][casilla-ancho+1] == 1 && floydC[casilla+1][casilla-ancho+1] == 1)
-    			  correcto = false;   		  
+    			  correcto = false; 	  
     	  }
     	  
     	  // Si esta en el borde der o esquina inferior der
     	  if ( (tipo == 15 || tipo == 3) && correcto){
     		  
     		  if (floydC[casilla][casilla-1] == 1 && floydC[casilla-ancho][casilla-ancho-1] == 1 && floydC[casilla-1][casilla-ancho-1] == 1)
-    			  correcto = false;  		  
+    			  correcto = false; 
     	  }
     	  
     	  if (correcto){
@@ -585,7 +590,7 @@ public class Grafo {
     	  boolean correcto = true; 
     	  
     	  // Si es el borde inferior, ignorar
-    	  if (tipo == 2 || tipo == 3 || tipo == 18)
+    	  if (tipo == 2 || tipo == 3 || tipo == 12 || tipo == 18)
     		  correcto = false;
     	   
     	  // Si esta dentro de la matriz
@@ -627,7 +632,7 @@ public class Grafo {
     	  boolean correcto = true; 
     	  
     	  // Si es el borde izq, ignorar
-    	  if (tipo == 0 || tipo == 2 || tipo == 21)
+    	  if (tipo == 0 || tipo == 2 || tipo == 15 || tipo == 21)
     		  correcto = false;
     	   
     	  // Si esta dentro de la matriz
@@ -669,7 +674,7 @@ public class Grafo {
     	  boolean correcto = true; 
     	  
     	  // Si es el borde der, ignorar
-    	  if (tipo == 1 || tipo == 3 || tipo == 15)
+    	  if (tipo == 1 || tipo == 3 || tipo == 21 || tipo == 15)
     		  correcto = false;
     	   
     	  // Si esta dentro de la matriz
@@ -757,11 +762,10 @@ public class Grafo {
    	  * @param semilla Semilla para el generador de numeros aleatorios
    	  * 
    	  */ 
-      public void procesarParedes(int ancho, long semilla){
+      public void procesarParedes(int ancho, Random randomGenerator){
     	  
-    	  tirarParedesPair(almacenarParedesPair(ancho), semilla); 
-    	  tirarParedesAtajo(ancho, semilla);
-      }
+    	  tirarParedesPair(almacenarParedesPair(ancho), randomGenerator); 
+      } 
       
      /**
        * Metodo que dado un inicio y final devuelve el camino entre los dos puntos de una matriz. NO DEVUELVE EL NODO ORIGEN
@@ -775,6 +779,8 @@ public class Grafo {
        */
        public List<Integer> encontrarCaminoList(int i, int k, List<Integer> Camino){
     	 
+    	 // TODO Hallar el mas corto de todos los caminos, o ruta mas corta  
+    	   
     	 if (Camino.isEmpty() == true)
     	 {
           Camino.add(0, i); // Añadimos el origen
@@ -855,17 +861,7 @@ public class Grafo {
           
           camino.add(i); // Añadimos el origen
           
-          if ((i+1)/ancho == i/ancho)
-          {	  
-        	  if (arcos[i][i+1] != Grafo.INFINITO)
-        	  {
-        		  camino.add(i+1);
-        		  i++;
-        		  haMovido = true;
-        	  }  
-          }
-          
-          if (i+ancho < getNumNodos() && haMovido == false)
+          if (i+ancho < getNumNodos())
           {
         	  if (arcos[i][i+ancho] != Grafo.INFINITO)
         	  {
@@ -875,20 +871,30 @@ public class Grafo {
         	  }       	  
           }
           
-          if ((i-1)/ancho == i/ancho && haMovido == false && i != 0)
-          {
-        	  if (arcos[i][i-1] != Grafo.INFINITO)
+          if ((i+1)/ancho == i/ancho && !haMovido)
+          {	  
+        	  if (arcos[i][i+1] != Grafo.INFINITO)
         	  {
-        		  camino.add(i-1);
-    		  	  i--;
-    		  	  haMovido = true;
-    	  	  }
+        		  camino.add(i+1);
+        		  i++;
+        		  haMovido = true;
+        	  }  
+          }
+          
+          if (i-ancho >= 0 && !haMovido)
+          {
+        	  if (arcos[i][i-ancho] != Grafo.INFINITO)
+        	  {
+        		  camino.add(i-ancho);
+        		  i-=ancho;
+        		  haMovido = true;
+        	  }
           }
           
           if (haMovido == false) 
           {
-        	  camino.add(i-ancho);
-        	  i -= ancho;
+        	  camino.add(i-1);
+        	  i--;
         	  haMovido = true;
           }
           
@@ -1361,18 +1367,9 @@ public class Grafo {
 	public static void main(String[] args) {
 		
 		Grafo pepe = new Grafo(6,6);
-		pepe.procesarParedes(6, 1987);
+		//pepe.procesarParedes(6, 1987);
 
-		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
-		pepe.encontrarListaCaminos(0, 35, listaCam, new LinkedList<Integer>());
-		System.out.println(listaCam.size());
-		Iterator<LinkedList<Integer>> it = listaCam.iterator();
-		LinkedList<Integer> aux;
-		while(it.hasNext())
-		{
-			aux = it.next();
-			System.out.println(aux);
-		}
+		
 	}
 	
 }

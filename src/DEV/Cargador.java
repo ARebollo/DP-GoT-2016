@@ -74,8 +74,8 @@ public class Cargador {
 									mostrarDatosInicial(vCampos);
 									// Obtenemos alto, ancho y salida
 									
-									int alto = Integer.parseInt(vCampos.get(1));
-									int ancho = Integer.parseInt(vCampos.get(2));
+									int ancho = Integer.parseInt(vCampos.get(1));
+									int alto = Integer.parseInt(vCampos.get(2));
 									int id_salida = Integer.parseInt(vCampos.get(3));
 									int prof = Integer.parseInt(vCampos.get(4));
 									
@@ -94,7 +94,7 @@ public class Cargador {
 
 						case ("STARK"):
 							try {
-								// Si lleja a un pj y no hay galaxia, error
+								// Si lleja a un pj y no hay mapa, error
 								// fatal
 								if (map != null) {
 									if (Integer.parseInt(vCampos.get(3)) >= 1) {
@@ -111,7 +111,7 @@ public class Cargador {
 
 						case ("TARGARYEN"):
 							try {
-								// Si lleja a un pj y no hay galaxia, error
+								// Si lleja a un pj y no hay mapa, error
 								// fatal
 								if (map != null) {
 									if (Integer.parseInt(vCampos.get(3)) >= 1) {
@@ -129,7 +129,7 @@ public class Cargador {
 						case ("LANNISTER"):
 
 							try {
-								// Si lleja a un pj y no hay galaxia, error
+								// Si lleja a un pj y no hay mapa, error
 								// fatal
 								if (map != null) {
 									if (Integer.parseInt(vCampos.get(3)) >= 1) {
