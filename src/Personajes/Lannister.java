@@ -98,7 +98,7 @@ public class Lannister extends Personaje {
 	protected void accionPersonaje(Sala sala) {
 		if (getidSala() % 2 == 0 && tieneLlaves())
 		{
-		 getPilaLlave().removeLast();
+		 getPilaLlave().removeLast();	//TODO Añadir a la estacion en la que lo pierde
 		}
 		
 	}
