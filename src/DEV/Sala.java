@@ -247,12 +247,26 @@ public class Sala{
 		
 		Iterator<Personaje> it = colaPers.iterator();
 		Personaje persAux;
+		
 		while (it.hasNext() == true){
 			persAux = it.next();
-			if (!persAux.getClass().getSimpleName().contains("Imperial") && //TODO: AUGH²
-					!persAux.getClass().getSimpleName().contains("ContrabandistaReves")){
-			System.out.print(persAux.toString() + " ");}
+			persAux.setidSala(1111);
+			System.out.print("nuevorey:" + persAux.toString() + " ");
 		}
+	}
+	
+	//TODO Puede haber mas de un rey ???? (quitar el while vamos)
+	public String mostrarGanadoresAbiertaString(){
+		
+		Iterator<Personaje> it = colaPers.iterator();
+		Personaje persAux;
+		String a = "";
+		
+		persAux = it.next();
+		persAux.setidSala(1111);  //Id de la sala ganadora
+		a = ("(nuevorey:" + persAux.toString());
+		
+		return a;	
 	}
 	
 	/**

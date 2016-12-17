@@ -46,6 +46,15 @@ public class Stark extends Personaje{
 	}
 	
 	@Override
+	protected void accionPersonaje(Sala sala) {
+		if (sala.hayLlaves())
+		{
+		 aniadirLlave(sala.sacarLlave());
+		}
+		
+	}
+
+	@Override
 	protected void moverse(Mapa map)
 	{
 		if (camino.peek() == null)
@@ -58,14 +67,5 @@ public class Stark extends Personaje{
 			setidSala(dirACamino(camino.remove(), map.getAncho()));
 		}
  		
-	}
-
-	@Override
-	protected void accionPersonaje(Sala sala) {
-		if (sala.hayLlaves())
-		{
-		 aniadirLlave(sala.sacarLlave());
-		}
-		
 	}
 }

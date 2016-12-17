@@ -321,7 +321,7 @@ public class abb <T extends Comparable<T>> {
      */
     public String arbolAString() {
         
-        String a =  "";
+        String a = "";
      
         	if (!esVacio()) 
             {
