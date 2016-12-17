@@ -262,6 +262,14 @@ public class Puerta {
 		Combinacion = combinacion;
 	}
 	
+	public String getCombinacionString (){
+		
+		String combi = getCombinacion().arbolAString();
+		
+		return combi;
+		
+	}
+	
 	/**
    	 * Indica si la Puerta esta abierta o cerrada
    	 * 

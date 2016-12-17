@@ -11,6 +11,7 @@ import Estructuras.Pair;
 
 
 public class Mapa {
+	
 	private int alto;
 	private int ancho;
 	private int id_salida;
@@ -19,6 +20,7 @@ public class Mapa {
 	private Queue<Llave> listaLlaveMapa;
 	private Grafo grafoMapa;
 	private String mapaSinAtajos;
+	
 	Mapa(int alto, int ancho, int id, int prof){
 		this.alto = alto;
 		this.ancho = ancho;
@@ -43,7 +45,7 @@ public class Mapa {
 		grafoMapa.procesarParedes(ancho, randomGenerator);
 		
 		// Imprimir el mapa antes de generar los atajos
-		mapaSinAtajos = mapaAString();
+		mapaSinAtajos = mapaAStringSinPJ();
 		
 		// Tirar los atajos
 		grafoMapa.tirarParedesAtajo(ancho, randomGenerator);
@@ -165,7 +167,7 @@ public class Mapa {
 				if (mapaSalas[i][j].hayPersonajes() == true) {
 					if (mapaSalas[i][j].cuantosPJ() > 1) {
 						map = map + String.valueOf(mapaSalas[i][j].cuantosPJ());
-						/* Si hay más de dos personajes en una estación,
+						/* Si hay más de dos personajes en una sala,
 						 * muestra cuantos hay 
 						 */
 					} else {
@@ -219,9 +221,77 @@ public class Mapa {
 
 		} // Fin for i
 
-		//map = map + ' ';
+		return map;
+	}
+	
+	private String mapaAStringSinPJ(){
+		String map = "";
+		int y = 0;
+		int x = 0;
+		Boolean arcoBajo = true; // Para comprobar si hay un arco debajo del
+									// nodo actual
+		Boolean arcoDer = false; // Para comprobar si hay un arco a la derecha
+									// del nodo actual
+		map = map + " ";
 
-		//map = map + '\n';
+		for (int i = 0; i < (ancho); i++) {
+			map = map + "_ ";
+		}
+		map = map + '\n';
+
+		for (int i = 0; i < alto; i++) {
+			map = map + '|';
+
+			for (int j = 0; j < ancho; j++) {
+
+				arcoBajo = true;
+
+					y = 0;
+					arcoBajo = false;
+					/* Comprobamos si hay arco con el nodo inferior */
+					while (y < grafoMapa.devolverArcos().size() && arcoBajo == false) { 
+						
+						/* Si el nodo de la lista coincide con el actual continuamos */
+						if (grafoMapa.devolverArcos().get(y).getFirst() == i * ancho + j) 
+						{
+							if (grafoMapa.devolverArcos().get(y).getFirst() + ancho == 
+									grafoMapa.devolverArcos().get(y).getSecond()) {
+								map = map + ' ';
+								arcoBajo = true;
+							}
+						}
+						y = y + 1;
+					} // Fin while arcoBajo
+
+				if (arcoBajo == false)
+					map = map + '_'; // Imprimir antes de comprobar arcos a la
+									// der, por errores de espacio
+
+				x = 0;
+				arcoDer = false;
+				/* Comprobamos si hay un arco con el nodo a la derecha */
+				while (x < grafoMapa.devolverArcos().size() && arcoDer == false) { 
+					/* Si el nodo de la lista coincide con el actual continuamos */
+					if (grafoMapa.devolverArcos().get(x).getFirst() == i * ancho + j) 
+					{
+						if (grafoMapa.devolverArcos().get(x).getFirst() + 1 == 
+								grafoMapa.devolverArcos().get(x).getSecond()) {
+							map = map + ' ';
+							arcoDer = true;
+						}
+					}
+					x = x + 1;
+				} // Fin while arcoDer
+
+				if (arcoDer == false)
+					map = map + '|';
+
+			} // Fin for j
+
+			map = map + '\n';
+
+		} // Fin for i
+		
 		return map;
 	}
 
@@ -279,6 +349,14 @@ public class Mapa {
 		this.grafoMapa = grafoMapa;
 	}
 
+	protected String getMapaSinAtajos() {
+		return mapaSinAtajos;
+	}
+
+	protected void setMapaSinAtajos(String mapaSinAtajos) {
+		this.mapaSinAtajos = mapaSinAtajos;
+	}
+
 	public boolean finJuego() {
 		return puertaTrono.isEstado();
 	}
@@ -296,14 +374,6 @@ public class Mapa {
 		{
 			System.out.print(Salas[i] + " ");
 		}
-	}
-
-	protected String getMapaSinAtajos() {
-		return mapaSinAtajos;
-	}
-
-	protected void setMapaSinAtajos(String mapaSinAtajos) {
-		this.mapaSinAtajos = mapaSinAtajos;
 	}
 	
 }

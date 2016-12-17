@@ -104,7 +104,7 @@ public abstract class Personaje {
 			
 			while (it.hasNext()){
 				
-				aux += it.next() + " ";
+				aux = aux + " " + it.next();
 			}
 			
 		  return aux;
@@ -274,6 +274,19 @@ public abstract class Personaje {
 			this.turnoActual = turnoActual;
 		}
 		
+		public int getTurnoMasAlto(){
+			
+			int res = 0;
+			
+			if (getTurnoActual() <= getTurno())
+				res = getTurno();
+			else
+				res = getTurnoActual()-1;
+			
+			return res;
+			
+		}
+
 		/**
 	   	 * Obtiene la cola de caminos de la clase Personaje
 	   	 * 
@@ -413,6 +426,7 @@ public abstract class Personaje {
 		}
 		
 		//Realiza la accion apropiada para cada pj, es llamado por mover
+		// TODO necesito un modulo que devuelva como String las marcas que se han comido los no muertos e implementar en datosAfichero
 		protected abstract void tocarPuerta(Puerta puertamap);
 		
 		protected abstract void moverse(Mapa map);
@@ -436,7 +450,7 @@ public abstract class Personaje {
 				Llaves = Llaves + " " + it.next().toString();
 			}
 		
-		  return "(" + getClass().getSimpleName() + ":" + marcaId + ":" + idSala + ":" + turnoActual + ":" + Llaves + ")";
+		  return getClass().getSimpleName() + ":" + marcaId + ":" + idSala + ":" + getTurnoMasAlto() + ":" + Llaves + ")";
 		}
  
 }
