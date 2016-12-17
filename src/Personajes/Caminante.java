@@ -8,7 +8,6 @@ import DEV.Mapa;
 import DEV.Puerta;
 import DEV.Sala;
 import Estructuras.Grafo;
-import Personajes.Personaje.dir;
 
 public class Caminante extends Personaje{
 
@@ -32,7 +31,7 @@ public class Caminante extends Personaje{
 		
 		int dirAnt, dirSig;
 		
-		listaAux = grafoAux.encontrarCaminoList(grafoAux.getNumNodos() - map.getAncho(), 0, listaAux);
+		listaAux = grafoAux.encontrarMasCorto(grafoAux.getNumNodos() - map.getAncho(), 0);
 		//listaAux = grafoAux.encontrarCaminoList(, map.getAncho() - 1, listaAux);
 		dirAnt = listaAux.remove(0);
 		
@@ -45,7 +44,7 @@ public class Caminante extends Personaje{
 			dirAnt = dirSig;
 		}
 		
-		listaAux = grafoAux.encontrarCaminoList(0, map.getAncho() - 1, listaAux);
+		listaAux = grafoAux.encontrarMasCorto(0, map.getAncho() - 1);
 		dirAnt = listaAux.remove(0);
 		
 		while (listaAux.isEmpty() == false) {
@@ -57,7 +56,7 @@ public class Caminante extends Personaje{
 			dirAnt = dirSig;
 		}
 		
-		listaAux = grafoAux.encontrarCaminoList(map.getAncho() - 1, map.getAncho() * map.getAlto() - 1, listaAux);
+		listaAux = grafoAux.encontrarMasCorto(map.getAncho() - 1, map.getAncho() * map.getAlto() - 1);
 		dirAnt = listaAux.remove(0);
 		
 		while (listaAux.isEmpty() == false) {
@@ -69,7 +68,7 @@ public class Caminante extends Personaje{
 			dirAnt = dirSig;
 		}
 		
-		listaAux = grafoAux.encontrarCaminoList(map.getAncho() * map.getAlto() - 1,grafoAux.getNumNodos() - map.getAncho(), listaAux);
+		listaAux = grafoAux.encontrarMasCorto(map.getAncho() * map.getAlto() - 1,grafoAux.getNumNodos() - map.getAncho());
 		dirAnt = listaAux.remove(0);
 		
 		while (listaAux.isEmpty() == false) {
@@ -94,7 +93,7 @@ public class Caminante extends Personaje{
 
 	@Override
 	protected void accionPersonaje(Sala sala) {
-		if (sala.hayPersonajes())
+		if (sala.hayPersonajes() && sala.getColaPers().get(0).getClass()!=this.getClass())
 		{
 			//TODO Hay que guardarlos en algun sitio?
 			ListaMarcas.add(sala.sacarPj().getMarcaId());

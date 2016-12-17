@@ -171,7 +171,6 @@ public class Cargador {
 				} // Fin WHILE
 
 				flujo.close();
-				//TODO: Repartir los midis en galaxia
 			} // Fin ELSE
 		
 		return map;

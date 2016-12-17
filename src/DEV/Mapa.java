@@ -18,7 +18,7 @@ public class Mapa {
 	private Sala[][] mapaSalas;
 	private Queue<Llave> listaLlaveMapa;
 	private Grafo grafoMapa;
-	
+	private String mapaSinAtajos;
 	Mapa(int alto, int ancho, int id, int prof){
 		this.alto = alto;
 		this.ancho = ancho;
@@ -43,7 +43,7 @@ public class Mapa {
 		grafoMapa.procesarParedes(ancho, randomGenerator);
 		
 		// Imprimir el mapa antes de generar los atajos
-		System.out.println(this);
+		mapaSinAtajos = mapaAString();
 		
 		// Tirar los atajos
 		grafoMapa.tirarParedesAtajo(ancho, randomGenerator);
@@ -59,10 +59,11 @@ public class Mapa {
 		// Repartir llaves
 		Integer[] repartirLlaves = SalasMasFrec(); 
 		
+		//Recorre el vector de las mas frecuentadas
 		for (int i = 0; i<9; i++){
 			
-			for (int j = 0; i<5; i++){
-				
+			//Mete 5 llaves en cada una
+			for (int j = 0; j<5; j++){
 				buscarSala(repartirLlaves[i]).aniadirLlave(listaLlaveMapa.poll());
 			}			
 		}
@@ -100,6 +101,7 @@ public class Mapa {
 		while(!listaCam.isEmpty())
 		{
 			camino = listaCam.remove(0);
+			System.out.println(camino);
 			while (!camino.isEmpty())
 			{
 				est = camino.remove(0);
@@ -113,7 +115,7 @@ public class Mapa {
 			for (int i = 0;i<frecuencias.length;i++)
 			{
 				auxInt = false;
-				if (SalasLlaves.size() < 9)
+				if (SalasLlaves.size() < 9 &&frecuencias[i]>0)
 				{
 					SalasLlaves.add(new Pair<Integer,Integer>(i,frecuencias[i]));
 					auxInt= true;  
@@ -129,8 +131,6 @@ public class Mapa {
 			}
 			
 		Integer[] SalasConLlaves = new Integer[9];
-		
-		// TODO ordenar de mayor a menor el vector
 		
 		for (int i = 0;i<9;i++)
 		{
@@ -148,7 +148,6 @@ public class Mapa {
 									// nodo actual
 		Boolean arcoDer = false; // Para comprobar si hay un arco a la derecha
 									// del nodo actual
-		map = map + '\n';
 		map = map + " ";
 
 		for (int i = 0; i < (ancho); i++) {
@@ -220,9 +219,9 @@ public class Mapa {
 
 		} // Fin for i
 
-		map = map + ' ';
+		//map = map + ' ';
 
-		map = map + '\n';
+		//map = map + '\n';
 		return map;
 	}
 
@@ -290,8 +289,21 @@ public class Mapa {
 
 	public static void main(String[] args)
 	{
-		Mapa Map = new Mapa(6,10,59,5);
+		Mapa Map = new Mapa(6,6,35,5);
 		System.out.println(Map);
+		Integer[] Salas = Map.SalasMasFrec();
+		for(int i=0;i<9;i++)
+		{
+			System.out.print(Salas[i] + " ");
+		}
+	}
+
+	protected String getMapaSinAtajos() {
+		return mapaSinAtajos;
+	}
+
+	protected void setMapaSinAtajos(String mapaSinAtajos) {
+		this.mapaSinAtajos = mapaSinAtajos;
 	}
 	
 }

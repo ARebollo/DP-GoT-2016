@@ -6,6 +6,7 @@ import java.util.List;
 
 import Estructuras.Llave;
 import Estructuras.abb;
+import Personajes.Personaje;
 
 /**
 * Declaracion de la clase Puerta
@@ -15,7 +16,7 @@ import Estructuras.abb;
 *   <b> Curso 15/16 </b>
 */
 public class Puerta {
-
+	private Personaje persGanador;
 	private abb<Llave> Probados;
 	private abb<Llave> Combinacion;
 	private boolean estado; // True abierta, False cerrada
@@ -325,6 +326,14 @@ public class Puerta {
 	public void setVectorCfg(Llave[] vectorCfg) {
 		
 		this.vectorCfg = vectorCfg;
+	}
+
+	public Personaje getPersGanador() {
+		return persGanador;
+	}
+
+	public void setPersGanador(Personaje persGanador) {
+		this.persGanador = persGanador;
 	}
 	
 	

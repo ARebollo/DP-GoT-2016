@@ -1,6 +1,5 @@
 package Estructuras;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -767,6 +766,23 @@ public class Grafo {
     	  tirarParedesPair(almacenarParedesPair(ancho), randomGenerator); 
       } 
       
+      public List<Integer> encontrarMasCorto(int i, int k)
+      {
+    	  LinkedList<Integer> camino = new LinkedList<Integer>();
+    	  List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
+    	  encontrarListaCaminos(i,k,listaCam,camino);
+    	  int length = 9999;
+    	  for (int j = 0;j<listaCam.size();j++)
+    	  {
+    		  if (listaCam.get(j).size()<length)
+    		  {
+    			  camino = listaCam.get(j);
+    			  length = listaCam.get(j).size();
+    		  }
+    	  }
+    	  return camino;
+      }
+      
      /**
        * Metodo que dado un inicio y final devuelve el camino entre los dos puntos de una matriz. NO DEVUELVE EL NODO ORIGEN
        * 
@@ -778,8 +794,7 @@ public class Grafo {
        * 
        */
        public List<Integer> encontrarCaminoList(int i, int k, List<Integer> Camino){
-    	 
-    	 // TODO Hallar el mas corto de todos los caminos, o ruta mas corta  
+    	   
     	   
     	 if (Camino.isEmpty() == true)
     	 {
@@ -818,7 +833,7 @@ public class Grafo {
          * 
          * 
          */
-         public void encontrarListaCaminos(int i, int k, List<LinkedList<Integer>> listaCam, LinkedList<Integer> caminoAct){
+         public void encontrarListaCaminos(int i, int k, List<LinkedList<Integer>> listaCam, List<Integer> caminoAct){
       	 
         	 if (caminoAct.isEmpty() == true)
         	 {
@@ -828,7 +843,7 @@ public class Grafo {
     		 {
     		  caminoAct.add(k);
     		  listaCam.add(new LinkedList<Integer>(caminoAct));
-    		  caminoAct.removeLast();
+    		  caminoAct.remove(caminoAct.indexOf(k));
     		 }
         	 else for (int j = 0; j < getNumNodos() && caminoAct.contains(k) == false; j++){
         		 if (arcos[i][j] != Grafo.INFINITO && !caminoAct.contains(j))
@@ -1364,10 +1379,23 @@ public class Grafo {
 		this.numNodos = numNodos;
 	}
 	
+	
 	public static void main(String[] args) {
 		
-		Grafo pepe = new Grafo(6,6);
-		//pepe.procesarParedes(6, 1987);
+		Grafo pepe = new Grafo(6,10);
+		Random randomGen = new Random(1987);
+		pepe.procesarParedes(6, randomGen);
+		pepe.tirarParedesAtajo(6, randomGen);
+		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
+		List<Integer> caminoAct = new LinkedList<Integer>();
+		pepe.encontrarListaCaminos(0, 59, listaCam, caminoAct );
+		while(listaCam.isEmpty() == false)
+		{
+			System.out.println("LONG" + listaCam.get(0).size() +  listaCam.get(0));
+			listaCam.remove(0);
+		}
+		caminoAct = pepe.encontrarMasCorto(0, 59);
+		System.out.println("CAMINO" + caminoAct);
 
 		
 	}

@@ -26,10 +26,10 @@ public class Simulacion {
 		
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("registro.log", true)));
 		datosInicial(out);
-		
+		System.out.println("INICIANDO");
 		boolean fin = false;
 		
-		while (turno< 50 && !fin)
+		while (turno < 50 && !fin)
 		{
 			fin = mapaGOT.simTurnoMapa();
 			if (!fin)
@@ -50,7 +50,7 @@ public class Simulacion {
 	
 	private void datosInicial(PrintWriter out) {
 		Personaje persAux;
-		out.print(mapaGOT);
+		out.print(mapaGOT.getMapaSinAtajos());
 		Iterator<Personaje> it = mapaGOT.buscarSala(0).getColaPers().iterator(); 
 		/* Para los Stark */
 
@@ -326,23 +326,19 @@ public class Simulacion {
 	 * 
 	 */
 	private void datosAFichero(PrintWriter out) throws IOException {
-		//TODO: No necesario en esta entrega
 		/* Iniciar flujo (true añade datos al final) */
-		 
-		Personaje persAux; // Para extraer datos de los personajes
-				out.println("===============================================");
 				out.println("(turno:" + turno + ")");
-				out.println("(galaxia:" + (mapaGOT.getAlto() * mapaGOT.getAncho() - 1) + ")");
+				out.println("(mapa:" + (mapaGOT.getAlto() * mapaGOT.getAncho() - 1) + ")");
 
 				out.print("(puerta:");
 				if (mapaGOT.finJuego() == true) {
 					out.print("abierta:" + mapaGOT.getPuertaTrono().getProfundidad() + ":");
 					out.print(mapaGOT.getPuertaTrono().getProbados().arbolAString());
-					out.print(")");
+					out.println(")");
 				} else {
 					out.print("cerrada:" + mapaGOT.getPuertaTrono().getProfundidad() + ":");
 					out.print(mapaGOT.getPuertaTrono().getProbados().arbolAString());
-					out.print(")");
+					out.println(")");
 				}
 
 				// ------------------------------------
@@ -404,7 +400,7 @@ public class Simulacion {
 			System.out.println("Error de archivo");
 			e.printStackTrace();
 		} catch (ConfigNoValida e) {
-			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 

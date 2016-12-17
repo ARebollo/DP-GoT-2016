@@ -231,7 +231,7 @@ public class Sala{
 			
 			persAux = it.next();
 
-			if (persAux.getClass().getSimpleName().contains("Imperial") || //TODO: AUGH
+			if (persAux.getClass().getSimpleName().contains("Imperial") || //TODO: AUGH, MUCHO AUGH
 					persAux.getClass().getSimpleName().contains("ContrabandistaReves")){
 					
 				System.out.println(persAux.toString() + " ");
@@ -249,7 +249,7 @@ public class Sala{
 		Personaje persAux;
 		while (it.hasNext() == true){
 			persAux = it.next();
-			if (!persAux.getClass().getSimpleName().contains("Imperial") && //TODO: AUGH
+			if (!persAux.getClass().getSimpleName().contains("Imperial") && //TODO: AUGH²
 					!persAux.getClass().getSimpleName().contains("ContrabandistaReves")){
 			System.out.print(persAux.toString() + " ");}
 		}
@@ -389,7 +389,7 @@ public class Sala{
 			
 			persAux = colaPers.remove(0);
 			
-			if (persAux.isHaMovido() == false && persAux.esSuTurno(mapa) == true)
+			if (persAux.isHaMovido() == false && persAux.esSuTurno() == true)
 				persAux.turnoPj(mapa);
 			else if (persAux.isHaMovido() == true)
 				colaPers.add(persAux);

@@ -379,16 +379,8 @@ public abstract class Personaje {
 	   	 * @return True : si el Personaje puede actuar <br> False : si el Personaje ha de esperar a su turno
 	   	 * 
 	   	 */
-		public boolean esSuTurno(Mapa map){
-			
-			boolean turnoPJ = false;
-					
-			if (turnoActual >= turno-1)	// -1 Para que actue en el turno exacto que indica el archivo de config
-			{
-			    turnoPJ = true;
-			}
-			
-			return turnoPJ;
+		public boolean esSuTurno(){
+			return turnoActual>=turno;
 		}
 		
 		
@@ -406,6 +398,12 @@ public abstract class Personaje {
 			{
 				tocarPuerta(map.getPuertaTrono());
 				moverse(map);
+				
+				//Si la puerta se ha abierto hay que sacar al personaje
+				if (map.finJuego())
+				{
+					map.buscarSala(idSala).getColaPers().remove(this);
+				}
 			}
 			else
 			{

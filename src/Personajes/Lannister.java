@@ -9,7 +9,6 @@ import DEV.Puerta;
 import DEV.Sala;
 import Estructuras.Grafo;
 import Estructuras.Llave;
-import Personajes.Personaje.dir;
 
 public class Lannister extends Personaje {
 	
@@ -37,7 +36,7 @@ public class Lannister extends Personaje {
 		
 		int dirAnt, dirSig;
 
-		listaAux = grafoAux.encontrarCaminoList(map.getAncho() * map.getAlto() - 1, map.getAncho() - 1, listaAux);
+		listaAux = grafoAux.encontrarMasCorto(map.getAncho() * map.getAlto() - 1, map.getAncho() - 1);
 		dirAnt = listaAux.remove(0);
 		
 		while (listaAux.isEmpty() == false) {
@@ -49,7 +48,7 @@ public class Lannister extends Personaje {
 			dirAnt = dirSig;
 		}
 		
-		listaAux = grafoAux.encontrarCaminoList(map.getAncho() - 1, 0, listaAux);
+		listaAux = grafoAux.encontrarMasCorto(map.getAncho() - 1, 0);
 		dirAnt = listaAux.remove(0);
 		
 		while (listaAux.isEmpty() == false) {
@@ -61,7 +60,7 @@ public class Lannister extends Personaje {
 			dirAnt = dirSig;
 		}
 		
-		listaAux = grafoAux.encontrarCaminoList(0, grafoAux.getNumNodos() - map.getAncho(), listaAux);
+		listaAux = grafoAux.encontrarMasCorto(0, grafoAux.getNumNodos() - map.getAncho());
 		dirAnt = listaAux.remove(0);
 		
 		while (listaAux.isEmpty() == false) {
@@ -73,7 +72,7 @@ public class Lannister extends Personaje {
 			dirAnt = dirSig;
 		}
 		
-		listaAux = grafoAux.encontrarCaminoList(grafoAux.getNumNodos() - map.getAncho(), grafoAux.getNumNodos() - 1, listaAux);
+		listaAux = grafoAux.encontrarMasCorto(grafoAux.getNumNodos() - map.getAncho(), grafoAux.getNumNodos() - 1);
 		dirAnt = listaAux.remove(0);
 		
 		while (listaAux.isEmpty() == false) {
@@ -90,7 +89,6 @@ public class Lannister extends Personaje {
 	@Override
 	protected void tocarPuerta(Puerta puertamap) {
 		puertamap.cerrarPuerta();
-		//TODO Resetear camino cuando toque
 		
 	}
 
@@ -98,7 +96,7 @@ public class Lannister extends Personaje {
 	protected void accionPersonaje(Sala sala) {
 		if (getidSala() % 2 == 0 && tieneLlaves())
 		{
-		 getPilaLlave().removeLast();	//TODO Añadir a la estacion en la que lo pierde
+		 sala.aniadirLlave(getPilaLlave().removeLast());
 		}
 		
 	}
