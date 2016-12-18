@@ -21,7 +21,7 @@ public class Stark extends Personaje{
 	protected void hallarCamino(Mapa map) {
 		List<Integer> listaAux = new LinkedList<Integer>();
 		Grafo grafoAux = map.getGrafoMapa();
-		listaAux = grafoAux.encontrarMasCorto(0, map.getId_salida());
+		listaAux = grafoAux.encontrarCaminoList(0,map.getId_salida(),listaAux);
 		
 		int dirAnt = listaAux.remove(0);
 		int dirSig;
