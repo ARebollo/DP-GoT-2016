@@ -217,57 +217,6 @@ public class Sala{
 
 		}
 	}
-	//TODO: Los hay que ganan con puerta cerrada?
-	/**
-   	 * Muestra la informacion de los Personajes que ganan con puerta cerrada que se encuentran en la Sala
-   	 * 
-   	 */
-	public void mostrarGanadoresCerrada(){
-		
-		Iterator<Personaje> it = colaPers.iterator();
-		Personaje persAux;
-		
-		while (it.hasNext() == true){
-			
-			persAux = it.next();
-
-			if (persAux.getClass().getSimpleName().contains("Imperial") || //TODO: AUGH, MUCHO AUGH
-					persAux.getClass().getSimpleName().contains("ContrabandistaReves")){
-					
-				System.out.println(persAux.toString() + " ");
-			}
-		}
-	}
-	
-	/**
-   	 * Muestra la informacion de los Personajes que ganan con puerta abierta que se encuentran en la Sala
-   	 * 
-   	 */
-	public void mostrarGanadoresAbierta(){
-		
-		Iterator<Personaje> it = colaPers.iterator();
-		Personaje persAux;
-		
-		while (it.hasNext() == true){
-			persAux = it.next();
-			persAux.setidSala(1111);
-			System.out.print("nuevorey:" + persAux.toString() + " ");
-		}
-	}
-	
-	//TODO Puede haber mas de un rey ???? (quitar el while vamos)
-	public String mostrarGanadoresAbiertaString(){
-		
-		Iterator<Personaje> it = colaPers.iterator();
-		Personaje persAux;
-		String a = "";
-		
-		persAux = it.next();
-		persAux.setidSala(1111);  //Id de la sala ganadora
-		a = ("(nuevorey:" + persAux.toString());
-		
-		return a;	
-	}
 	
 	/**
    	 * Indica si la Sala contiene Personajes

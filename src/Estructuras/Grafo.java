@@ -531,7 +531,7 @@ public class Grafo {
     	  boolean correcto = true; 
     	  
     	  // Si es el borde superior o las esquinas superiores, ignorar
-    	  if (tipo == 0 || tipo == 1 || tipo == 12 || tipo == 18){
+    	  if (tipo == 0 || tipo == 1 || tipo == 12){
     		  correcto = false;
     	  }
     	   
@@ -589,7 +589,7 @@ public class Grafo {
     	  boolean correcto = true; 
     	  
     	  // Si es el borde inferior, ignorar
-    	  if (tipo == 2 || tipo == 3 || tipo == 12 || tipo == 18)
+    	  if (tipo == 2 || tipo == 3 || tipo == 18)
     		  correcto = false;
     	   
     	  // Si esta dentro de la matriz
@@ -631,7 +631,7 @@ public class Grafo {
     	  boolean correcto = true; 
     	  
     	  // Si es el borde izq, ignorar
-    	  if (tipo == 0 || tipo == 2 || tipo == 15 || tipo == 21)
+    	  if (tipo == 0 || tipo == 2 || tipo == 21)
     		  correcto = false;
     	   
     	  // Si esta dentro de la matriz
@@ -673,7 +673,7 @@ public class Grafo {
     	  boolean correcto = true; 
     	  
     	  // Si es el borde der, ignorar
-    	  if (tipo == 1 || tipo == 3 || tipo == 21 || tipo == 15)
+    	  if (tipo == 1 || tipo == 3 || tipo == 15)
     		  correcto = false;
     	   
     	  // Si esta dentro de la matriz
@@ -1382,10 +1382,10 @@ public class Grafo {
 	
 	public static void main(String[] args) {
 		
-		Grafo pepe = new Grafo(6,10);
+		Grafo pepe = new Grafo(10,6);
 		Random randomGen = new Random(1987);
-		pepe.procesarParedes(6, randomGen);
-		pepe.tirarParedesAtajo(6, randomGen);
+		pepe.procesarParedes(10, randomGen);
+		pepe.tirarParedesAtajo(10, randomGen);
 		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
 		List<Integer> caminoAct = new LinkedList<Integer>();
 		pepe.encontrarListaCaminos(0, 59, listaCam, caminoAct );

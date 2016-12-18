@@ -114,14 +114,10 @@ public class Mapa {
 		List<Pair<Integer, Integer>> SalasLlaves = new LinkedList<Pair<Integer, Integer>>();
 		
 		boolean auxInt = false; // Si ya se ha insertado
-			for (int i = 0;i<frecuencias.length;i++)
+			for (int i = 0; i<frecuencias.length; i++)
 			{
 				auxInt = false;
-				if (SalasLlaves.size() < 9 &&frecuencias[i]>0)
-				{
-					SalasLlaves.add(new Pair<Integer,Integer>(i,frecuencias[i]));
-					auxInt= true;  
-				}
+				
 				for (int j = 0;j<SalasLlaves.size() && !auxInt;j++)
 				{
 					if (frecuencias[i] > SalasLlaves.get(j).getSecond())
@@ -130,6 +126,8 @@ public class Mapa {
 						auxInt = true;
 					}
 				}
+				if (auxInt == false && SalasLlaves.size() < 9)
+					SalasLlaves.add(SalasLlaves.size(), new Pair<Integer,Integer>(i, frecuencias[i]));
 			}
 			
 		Integer[] SalasConLlaves = new Integer[9];

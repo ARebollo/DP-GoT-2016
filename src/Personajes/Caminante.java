@@ -1,5 +1,6 @@
 package Personajes;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -32,7 +33,7 @@ public class Caminante extends Personaje{
 		int dirAnt, dirSig;
 		
 		listaAux = grafoAux.encontrarMasCorto(grafoAux.getNumNodos() - map.getAncho(), 0);
-		//listaAux = grafoAux.encontrarCaminoList(, map.getAncho() - 1, listaAux);
+		
 		dirAnt = listaAux.remove(0);
 		
 		while (listaAux.isEmpty() == false) {
@@ -85,9 +86,7 @@ public class Caminante extends Personaje{
 
 	@Override
 	protected void tocarPuerta(Puerta puertamap) {
-		puertamap.cerrarPuerta();
-		//TODO Resetear camino cuando toque
-		
+		puertamap.cerrarPuerta();	
 		
 	}
 
@@ -95,7 +94,6 @@ public class Caminante extends Personaje{
 	protected void accionPersonaje(Sala sala) {
 		if (sala.hayPersonajes() && sala.getColaPers().get(0).getClass()!=this.getClass())
 		{
-			//TODO Hay que guardarlos en algun sitio?
 			ListaMarcas.add(sala.sacarPj().getMarcaId());
 		}
 		
@@ -109,6 +107,20 @@ public class Caminante extends Personaje{
 		}
 		map.buscarSala(dirACamino(camino.peek(), map.getAncho())).aniadirPj(this);  // Obtiene el camino del pj, busca la estacion con esa id y luego añade el personaje
 		setidSala(dirACamino(camino.remove(), map.getAncho()));
+	}
+	
+	@Override
+	public String toString() {
+		
+		String Comidos = "";
+		Iterator<Character> it = ListaMarcas.iterator();
+		
+		while(it.hasNext() == true){
+			 
+			Comidos = Comidos + " " + it.next().toString();
+		}
+	
+	  return getClass().getSimpleName() + ":" + marcaId + ":" + idSala + ":" + getTurnoMasAlto() + ":" + Comidos + ")";
 	}
 
 }
