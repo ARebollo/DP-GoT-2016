@@ -159,7 +159,7 @@ public class Simulacion {
 		// ----------------------
 		// Mostrando ganadores
 		// ----------------------
-		mapaGOT.buscarSala(mapaGOT.getId_salida()).mostrarGanadoresAbierta();
+		System.out.println("(nuevorey:" + mapaGOT.getPuertaTrono().getPersGanador().toString());
 	}
 	
 	private void datosFin(PrintWriter out) {
@@ -169,7 +169,7 @@ public class Simulacion {
 		// ----------------------
 		// Mostrando ganadores
 		// ----------------------
-		out.println(mapaGOT.buscarSala(mapaGOT.getId_salida()).mostrarGanadoresAbiertaString());
+		out.println("(nuevorey:" + mapaGOT.getPuertaTrono().getPersGanador().toString());
 	}
 
 	/**
@@ -193,10 +193,12 @@ public class Simulacion {
 				if (mapaGOT.finJuego() == true) {
 					out.print("abierta:" + mapaGOT.getPuertaTrono().getProfundidad() + ":");
 					out.print(mapaGOT.getPuertaTrono().getCombinacionString());
+					out.print(mapaGOT.getPuertaTrono().getProbadosString());
 					out.println(":)");
 				} else {
 					out.print("cerrada:" + mapaGOT.getPuertaTrono().getProfundidad() + ":");
 					out.print(mapaGOT.getPuertaTrono().getCombinacionString());
+					out.print(mapaGOT.getPuertaTrono().getProbadosString());
 					out.println(":)");
 				}
 

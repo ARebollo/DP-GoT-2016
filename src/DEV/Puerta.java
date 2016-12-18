@@ -240,6 +240,14 @@ public class Puerta {
 		Probados = probados;
 	}
 	
+	public String getProbadosString (){
+		
+		String combi = getProbados().arbolAString();
+		
+		return combi;
+		
+	}
+	
 	/**
    	 * Obtiene el arbol Combinacion de la clase Puerta
    	 * 
@@ -337,6 +345,7 @@ public class Puerta {
 	}
 
 	public Personaje getPersGanador() {
+		persGanador.setidSala(1111);
 		return persGanador;
 	}
 

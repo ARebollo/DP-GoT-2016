@@ -96,7 +96,7 @@ public class Lannister extends Personaje {
 	protected void accionPersonaje(Sala sala) {
 		if (getidSala() % 2 == 0 && tieneLlaves())
 		{
-		 sala.aniadirLlave(getPilaLlave().removeLast());
+		 sala.aniadirLlave(getPilaLlave().removeFirst());
 		}
 		
 	}
