@@ -55,55 +55,6 @@ public class Puerta {
 	}
 	
 	/**
-   	 * Constructor parametrizado de la clase Puerta
-   	 * 
-   	 * @param vector Vector de Llaves
-   	 * @param constante Constante de profundidad para la cerradura de la puerta
-   	 * 
-   	 */
-	public Puerta(Llave [] vector, int constante){ // Constructor parametrizado, para configurar la combinacion pertinente
-		
-		estado = false;
-		Probados = new abb<Llave>();
-		Combinacion = new abb<Llave>();
-		profundidad = constante;
-		vectorCfg = vector;	
-		persTrono = new LinkedList<Personaje>();
-		configurarCombinacionCfg(0, vectorCfg.length-1);
-	}
-	
-	/**
-   	 * Crea la combinacion de la puerta a traves de una lista de Llaves
-   	 * 
-   	 */
-	public void setCombinacionList(List<Llave> list){
-				
-		vectorCfg = new Llave[list.size()];
-		
-		for (int i = 0; i < list.size(); i++){
-			
-			vectorCfg[i] = list.get(i);
-		}
-		
-		configurarCombinacionCfg(0, vectorCfg.length-1);
-	}
-	
-	/**
-   	 * Transforma una linkedlist de Llaves a un vector de Llaves
-   	 * 
-   	 */
-	public void setVectorCfgLinkedList(LinkedList<Llave> list){
-		
-		vectorCfg = new Llave[list.size()];
-		
-		for (int i = 0; i < list.size(); i++){
-			
-			vectorCfg[i] = list.get(i);
-		}
-		
-	}
-	
-	/**
    	 * Muestra el vector de configuracion por pantalla
    	 * 
    	 */
@@ -141,21 +92,14 @@ public class Puerta {
    	 */
 	public void cerrarPuerta (){
 		
-		if (this.estado == false)  // Si ya estaba cerrada reiniciarla
+		if (this.estado == false)  // Si ya estaba cerrada, reiniciarla
 		{		 
 		 this.Combinacion = new abb<Llave>();
 		 configurarCombinacionCfg(0, vectorCfg.length-1);
 		 this.Probados = new abb<Llave>();
-		 //TODO Quizás quitar los mensajes de texto.
-		 System.out.println();
-		 System.out.println("Reiniciando puerta...");
 		}
 		else  // Si estaba abierta, cerrarla
-		{
 		 this.estado = false;
-		 System.out.println();
-		 System.out.println("Cerrando puerta...");
-		}
 		
 	}
 
@@ -194,25 +138,14 @@ public class Puerta {
 			
 			if (Llave != null)
 			{
-				if (Probados.existe(Llave) == true)
-				{
-					System.out.println("Esta llave ya se ha probado.");
-					//TODO Quizás quitar mensajes de texto?
-				}
-				else
-				{
+				if (Probados.existe(Llave) == false)
 					Probados.insertar(Llave);
-				}
+				
 				if (Combinacion.existe(Llave) == true)
-				{
 					Combinacion.eliminar(Llave);
-				}
 		
 				if (Combinacion.altura() < profundidad && Combinacion.numHojas() <= (Combinacion.numNodos() - Combinacion.numHojas()) )
-				{
 					estado = true;
-					System.out.println("Abriendo puerta...");
-				}
 			}
 
 	}
@@ -326,7 +259,7 @@ public class Puerta {
 	/**
    	 * Obtiene el vector de configuracion de la clase Puerta
    	 * 
-   	 * @return Vector con los Llaveclorianos que se van a usar en la configuracion de la combinacion
+   	 * @return Vector con las Llaves que se van a usar en la configuracion de la combinacion
    	 * 
    	 */
 	public Llave[] getVectorCfg() {

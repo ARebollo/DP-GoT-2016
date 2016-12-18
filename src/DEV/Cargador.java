@@ -30,10 +30,8 @@ public class Cargador {
 			} else {
 
 				while (linea != null) {
-
-					if (linea.contains("--") == false) // Solo tomar en cuenta
-														// lineas sin
-														// comentarios
+					/* Solo tener en cuenta lineas sin comentarios */
+					if (linea.contains("--") == false) 
 					{
 						// Metemos la linea en vCampos
 						vCampos.clear();
@@ -46,20 +44,17 @@ public class Cargador {
 							}
 						}
 					}
-					linea = flujo.readLine(); // Avanzar en el fichero
+					// Avanzar en el fichero
+					linea = flujo.readLine(); 
 
 					if (vCampos.isEmpty() == false) {
-						switch (vCampos.get(0)) { // Miramos de que tipo es el
-													// campo
+						/* Miramos que tipo de campo es */
+						switch (vCampos.get(0)) {
 						case ("MAPA"):
 							try {
+								/* Para no crear más de un mapa */
 								if (map == null) {
-
-									// Comprobamos que los parámetros sean
-									// válidos
-									// (ancho,alto mayores que 0, salida dentro
-									// de
-									// la galaxia)
+									/* Comprobamos que los parámetros del mapa sean válidos */
 									if (Integer.parseInt(vCampos.get(1)) <= 0 || Integer.parseInt(vCampos.get(2)) <= 0
 											|| Integer.parseInt(vCampos.get(3)) < 0
 											|| Integer.parseInt(vCampos.get(3)) > (Integer.parseInt(vCampos.get(1))
@@ -68,18 +63,14 @@ public class Cargador {
 										throw new ConfigNoValida("Error en los datos del Mapa");
 									}
 
-									// Para que no se cree más de una galaxia al
-									// cargar de fichero
-
 									mostrarDatosInicial(vCampos);
-									// Obtenemos alto, ancho y salida
-									
+									/* Obtenemos alto, ancho y salida */
 									int ancho = Integer.parseInt(vCampos.get(1));
 									int alto = Integer.parseInt(vCampos.get(2));
 									int id_salida = Integer.parseInt(vCampos.get(3));
 									int prof = Integer.parseInt(vCampos.get(4));
 									
-									//Llamamos al constructor de mapa
+									/* Llamamos al constructor de mapa */
 									map = new Mapa(alto, ancho, id_salida, prof);
 
 								} else {
@@ -94,8 +85,7 @@ public class Cargador {
 
 						case ("STARK"):
 							try {
-								// Si lleja a un pj y no hay mapa, error
-								// fatal
+								/* Si lleja a un pj y no hay mapa, error fatal */
 								if (map != null) {
 									if (Integer.parseInt(vCampos.get(3)) >= 1) {
 										mostrarDatosInicial(vCampos);
@@ -106,13 +96,12 @@ public class Cargador {
 								} else 
 									throw new ConfigNoValida("No hay Mapa");
 							}
+							/* Los personajes no válidos no terminan el programa */
 							catch (PersNoValido e) {}
 							break;
 
 						case ("TARGARYEN"):
 							try {
-								// Si lleja a un pj y no hay mapa, error
-								// fatal
 								if (map != null) {
 									if (Integer.parseInt(vCampos.get(3)) >= 1) {
 										mostrarDatosInicial(vCampos);
@@ -129,8 +118,6 @@ public class Cargador {
 						case ("LANNISTER"):
 
 							try {
-								// Si lleja a un pj y no hay mapa, error
-								// fatal
 								if (map != null) {
 									if (Integer.parseInt(vCampos.get(3)) >= 1) {
 										mostrarDatosInicial(vCampos);
@@ -146,8 +133,6 @@ public class Cargador {
 
 						case ("CAMINANTE"):
 							try {
-								// Si lleja a un pj y no hay galaxia, error
-								// fatal
 								if (map != null) {
 									if (Integer.parseInt(vCampos.get(3)) >= 1) {
 										mostrarDatosInicial(vCampos);

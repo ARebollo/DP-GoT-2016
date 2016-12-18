@@ -95,7 +95,7 @@ public class Simulacion {
 
 		System.out.println();
 		System.out.println("(turno:" + turno + ")");
-		System.out.println("(galaxia:" + (mapaGOT.getAlto() * mapaGOT.getAncho() - 1) + ")");
+		System.out.println("(mapa:" + (mapaGOT.getAlto() * mapaGOT.getAncho() - 1) + ")");
 
 		System.out.print("(puerta:");
 		if (mapaGOT.finJuego() == true) {
@@ -109,7 +109,7 @@ public class Simulacion {
 		}
 
 		// ------------------------------------
-		// Mostrar el mapa de la Galaxia
+		// Mostrar el mapa
 		// ------------------------------------
 
 		System.out.println(mapaGOT);
@@ -136,7 +136,7 @@ public class Simulacion {
 		}
 
 		// ------------------------------------
-		// Mostrar personajes en la galaxia
+		// Mostrar personajes en el mapa
 		// ------------------------------------
 
 		for (int i = 0; i < mapaGOT.getAlto(); i++) {
@@ -179,9 +179,6 @@ public class Simulacion {
 	 * 
 	 * @param turno
 	 *            Numero del turno en el que se encuentra la simulacion
-	 * @param mapaInicial
-	 *            Booleano para indicar si solo hay que guardar el mapa de la
-	 *            Galaxia o la informacion completa del turno
 	 * 
 	 * @throws IOException
 	 * 
@@ -235,7 +232,7 @@ public class Simulacion {
 				}
 
 				// ------------------------------------
-				// Mostrar personajes en la galaxia
+				// Mostrar personajes en el mapa
 				// ------------------------------------
 
 				for (int i = 0; i < mapaGOT.getAlto(); i++) {

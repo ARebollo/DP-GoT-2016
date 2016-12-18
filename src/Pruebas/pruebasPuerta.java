@@ -23,11 +23,11 @@ public class pruebasPuerta {
 		{
 			vect[i-1] = new Llave(2*i - 1);
 		}
-		Puerta p = new Puerta(vect, 4);
+		/*Puerta p = new Puerta(vect, 4);
 		p.mostrarVectorCfg();
 		System.out.println(p.getCombinacion().arbolAString());
 		p.getCombinacion().anchura();
 		p.probarLlave(new Llave(5));
-		p.getCombinacion().anchura();
+		p.getCombinacion().anchura();*/
 	}
 }

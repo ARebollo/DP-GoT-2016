@@ -67,9 +67,9 @@ public class Grafo {
    /**
    	* Constructor parametrizado de la clase Grafo
    	* 
-   	* @param alto Altura de la galaxia
-   	* @param ancho Anchura de la galaxia
-   	* @param puertaGal id de la Estacion con la Puerta de salida
+   	* @param alto Altura del mapa
+   	* @param ancho Anchura del mapa
+   	* @param puertaGal id de la sala con la Puerta del trono
    	* 
    	*/
     public Grafo(int alto, int ancho){
@@ -757,7 +757,7 @@ public class Grafo {
      /**
    	  * Metodo para manejar los metodos relacionados con la eliminacion de paredes de manera sencilla
    	  * 
-   	  * @param ancho Anchura de la galaxia
+   	  * @param ancho Anchura del mapa
    	  * @param semilla Semilla para el generador de numeros aleatorios
    	  * 
    	  */ 
@@ -862,7 +862,7 @@ public class Grafo {
       *
       * @param i El nodo de inicio
       * @param j El nodo fin
-      * @param ancho Anchura de la galaxia
+      * @param ancho Anchura del mapa
       * 
       * @return Devuelve el camino seguido en forma de lista de enteros
       * 
@@ -1094,11 +1094,11 @@ public class Grafo {
       }
     
       /**
-       * Metodo que aplica el algoritmo de la mano derecha a la matriz de arcos, devolviendo el camino en forma de List
+       * Metodo que aplica el algoritmo de la mano izquierda a la matriz de arcos, devolviendo el camino en forma de List
        *
        * @param i El nodo de inicio
        * @param j El nodo fin
-       * @param ancho Anchura de la galaxia
+       * @param ancho Anchura del mapa
        * 
        * @return Devuelve el camino seguido en forma de lista de enteros
        * 
@@ -1337,7 +1337,7 @@ public class Grafo {
        }
       
     /**
-     * Metodo que devuelve los arcos que existen en el tablero de la galaxia en forma de una lista de pares
+     * Metodo que devuelve los arcos que existen en el tablero del mapa en forma de una lista de pares
      *
      * @return Lista de pares con la id de los nodos que forman arcos
      * 

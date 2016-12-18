@@ -19,6 +19,8 @@ public class Mapa {
 	private Sala[][] mapaSalas;
 	private Queue<Llave> listaLlaveMapa;
 	private Grafo grafoMapa;
+	
+	/* Para pasar el mapa inicial al log */
 	private String mapaSinAtajos;
 	
 	Mapa(int alto, int ancho, int id, int prof){
@@ -28,7 +30,7 @@ public class Mapa {
 		puertaTrono = new Puerta(prof);
 		listaLlaveMapa = new LinkedList<Llave>();
 		
-		//Inicializamos cada Sala con su id	
+		/* Inicializamos cada Sala con su id */	
 		mapaSalas = new Sala[alto][ancho];
 		for (int i = 0; i < alto; i++) {
 			for (int j = 0; j < ancho; j++) {
@@ -44,7 +46,7 @@ public class Mapa {
 		grafoMapa = new Grafo(alto,ancho);
 		grafoMapa.procesarParedes(ancho, randomGenerator);
 		
-		// Imprimir el mapa antes de generar los atajos
+		/* Imprimir el mapa antes de generar los atajos */
 		mapaSinAtajos = mapaAStringSinPJ();
 		
 		// Tirar los atajos
@@ -111,28 +113,35 @@ public class Mapa {
 			}
 		}
 
-		//En el primer elemento se guarda el número de sala, en el segundo la frecuencia
+		/*En el primer elemento se guarda el número de sala, en el segundo la frecuencia */
 		List<Pair<Integer, Integer>> SalasLlaves = new LinkedList<Pair<Integer, Integer>>();
 		
 		boolean auxInt = false; // Si ya se ha insertado
-			for (int i = 0; i<frecuencias.length; i++)
+		
+		/*
+		 * Recorre los valores del vector de frecuencias que sean mayores 
+		 * que 1 y los inserta si son mayores que alguno de los que hay (sustituyéndolo)
+		 * o si, en caso de no serlo, hay menos de 9, en cuyo caso se inserta al final
+		 *  */
+		for (int i = 0; i<frecuencias.length; i++)
+		{
+			auxInt = false;
+			if (frecuencias[i] > 0)
 			{
-				auxInt = false;
-				if (frecuencias[i] > 0)
+				for (int j = 0;j<SalasLlaves.size() && !auxInt;j++)
 				{
-					for (int j = 0;j<SalasLlaves.size() && !auxInt;j++)
+					if (frecuencias[i] > SalasLlaves.get(j).getSecond())
 					{
-						if (frecuencias[i] > SalasLlaves.get(j).getSecond())
-						{
-							SalasLlaves.set(j, new Pair<Integer,Integer>(i, frecuencias[i]));
-							auxInt = true;
-						}
+						SalasLlaves.set(j, new Pair<Integer,Integer>(i, frecuencias[i]));
+						auxInt = true;
 					}
-					if (auxInt == false && SalasLlaves.size() < 9)
-						SalasLlaves.add(SalasLlaves.size(), new Pair<Integer,Integer>(i, frecuencias[i]));
 				}
+				if (auxInt == false && SalasLlaves.size() < 9)
+					SalasLlaves.add(SalasLlaves.size(), new Pair<Integer,Integer>(i, frecuencias[i]));
 			}
-		System.out.println(SalasLlaves);
+		}
+		
+		/* Si hay menos de 9 salas con frecuencia 1 o más, se insertan por orden de id hasta llegar a 9 */
 		for (int i = 0;i<frecuencias.length && SalasLlaves.size()<9;i++) 
 		{
 			if (frecuencias[i] == 0)
@@ -154,12 +163,12 @@ public class Mapa {
 		String map = "";
 		int y = 0;
 		int x = 0;
-		Boolean arcoBajo = true; // Para comprobar si hay un arco debajo del
-									// nodo actual
-		Boolean arcoDer = false; // Para comprobar si hay un arco a la derecha
-									// del nodo actual
+		/* Para comprobar si hay un arco debajo del nodo actual */
+		Boolean arcoBajo = true; 
+		/*Para comprobar si hay un a la derecha del nodo actual */
+		Boolean arcoDer = false;
+		
 		map = map + " ";
-
 		for (int i = 0; i < (ancho); i++) {
 			map = map + "_ ";
 		}
@@ -176,8 +185,7 @@ public class Mapa {
 					if (mapaSalas[i][j].cuantosPJ() > 1) {
 						map = map + String.valueOf(mapaSalas[i][j].cuantosPJ());
 						/* Si hay más de dos personajes en una sala,
-						 * muestra cuantos hay 
-						 */
+						 * muestra cuantos hay */
 					} else {
 						map = map + mapaSalas[i][j].mirarPJ().getMarcaId();
 					}
@@ -201,8 +209,9 @@ public class Mapa {
 				}
 
 				if (arcoBajo == false)
-					map = map + '_'; // Imprimir antes de comprobar arcos a la
-									// der, por errores de espacio
+					map = map + '_'; 
+					/* Imprimir antes de comprobar arcos a la
+					 * derecha, por errores de espacio */
 
 				x = 0;
 				arcoDer = false;
@@ -236,10 +245,11 @@ public class Mapa {
 		String map = "";
 		int y = 0;
 		int x = 0;
-		Boolean arcoBajo = true; // Para comprobar si hay un arco debajo del
-									// nodo actual
-		Boolean arcoDer = false; // Para comprobar si hay un arco a la derecha
-									// del nodo actual
+		/* Para comprobar si hay un arco debajo del nodo actual */
+		Boolean arcoBajo = true; 
+		/*Para comprobar si hay un a la derecha del nodo actual */
+		Boolean arcoDer = false;
+		
 		map = map + " ";
 
 		for (int i = 0; i < (ancho); i++) {
@@ -272,8 +282,9 @@ public class Mapa {
 					} // Fin while arcoBajo
 
 				if (arcoBajo == false)
-					map = map + '_'; // Imprimir antes de comprobar arcos a la
-									// der, por errores de espacio
+					map = map + '_'; 
+					/* Imprimir antes de comprobar arcos a la
+					 * derecha, por errores de espacio */
 
 				x = 0;
 				arcoDer = false;
@@ -357,11 +368,11 @@ public class Mapa {
 		this.grafoMapa = grafoMapa;
 	}
 
-	protected String getMapaSinAtajos() {
+	public String getMapaSinAtajos() {
 		return mapaSinAtajos;
 	}
 
-	protected void setMapaSinAtajos(String mapaSinAtajos) {
+	public void setMapaSinAtajos(String mapaSinAtajos) {
 		this.mapaSinAtajos = mapaSinAtajos;
 	}
 
