@@ -39,9 +39,7 @@ public class Stark extends Personaje{
 	protected void tocarPuerta(Puerta puertamap) {
 		if (tieneLlaves())
 		{
-		 puertamap.probarLlave(sacarLlave());
-		 if (puertamap.isEstado())
-			 puertamap.setPersGanador(this);
+			puertamap.probarLlave(sacarLlave());
 		}
 	}
 	

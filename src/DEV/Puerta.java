@@ -16,7 +16,7 @@ import Personajes.Personaje;
 *   <b> Curso 15/16 </b>
 */
 public class Puerta {
-	private Personaje persGanador;
+	private List<Personaje> persTrono;
 	private abb<Llave> Probados;
 	private abb<Llave> Combinacion;
 	private boolean estado; // True abierta, False cerrada
@@ -34,7 +34,7 @@ public class Puerta {
 		Combinacion = new abb<Llave>();
 		profundidad = 0;
 		vectorCfg = new Llave[200];	
-		
+		persTrono = new LinkedList<Personaje>();
 	}
 	
 	public Puerta(int prof){ // Constructor parametrizado, que utiliza el vector por defecto
@@ -51,6 +51,7 @@ public class Puerta {
 			pos++;
 		}
 		configurarCombinacionCfg(0, vectorCfg.length-1);
+		persTrono = new LinkedList<Personaje>();
 	}
 	
 	/**
@@ -67,7 +68,7 @@ public class Puerta {
 		Combinacion = new abb<Llave>();
 		profundidad = constante;
 		vectorCfg = vector;	
-		
+		persTrono = new LinkedList<Personaje>();
 		configurarCombinacionCfg(0, vectorCfg.length-1);
 	}
 	
@@ -344,13 +345,17 @@ public class Puerta {
 		this.vectorCfg = vectorCfg;
 	}
 
-	public Personaje getPersGanador() {
-		persGanador.setidSala(1111);
-		return persGanador;
+	public void aniadirGanador(Personaje personaje)
+	{
+		persTrono.add(personaje);
 	}
 
-	public void setPersGanador(Personaje persGanador) {
-		this.persGanador = persGanador;
+	protected List<Personaje> getPersTrono() {
+		return persTrono;
+	}
+
+	protected void setPersTrono(List<Personaje> persTrono) {
+		this.persTrono = persTrono;
 	}
 	
 	

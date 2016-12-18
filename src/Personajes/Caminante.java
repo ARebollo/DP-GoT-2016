@@ -120,7 +120,7 @@ public class Caminante extends Personaje{
 			Comidos = Comidos + " " + it.next().toString();
 		}
 	
-	  return getClass().getSimpleName() + ":" + marcaId + ":" + idSala + ":" + getTurnoMasAlto() + ":" + Comidos + ")";
+	  return getClass().getSimpleName().toLowerCase() + ":" + marcaId + ":" + idSala + ":" + getTurnoMasAlto() + ":" + Comidos + ")";
 	}
 
 }

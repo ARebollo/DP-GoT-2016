@@ -73,7 +73,7 @@ public class Mapa {
 	
 	public boolean simTurnoMapa(){
 		boolean fin = false;
-		for(int i = 0;i<alto && !fin;i++)
+		for(int i = 0;i<alto;i++)
 		{
 			for(int j = 0;j<ancho && !fin;j++)
 				fin = mapaSalas[i][j].activarPJ(this);
@@ -110,6 +110,7 @@ public class Mapa {
 				frecuencias[est]++;
 			}
 		}
+
 		//En el primer elemento se guarda el número de sala, en el segundo la frecuencia
 		List<Pair<Integer, Integer>> SalasLlaves = new LinkedList<Pair<Integer, Integer>>();
 		
@@ -117,19 +118,28 @@ public class Mapa {
 			for (int i = 0; i<frecuencias.length; i++)
 			{
 				auxInt = false;
-				
-				for (int j = 0;j<SalasLlaves.size() && !auxInt;j++)
+				if (frecuencias[i] > 0)
 				{
-					if (frecuencias[i] > SalasLlaves.get(j).getSecond())
+					for (int j = 0;j<SalasLlaves.size() && !auxInt;j++)
 					{
-						SalasLlaves.set(j, new Pair<Integer,Integer>(i, frecuencias[i]));
-						auxInt = true;
+						if (frecuencias[i] > SalasLlaves.get(j).getSecond())
+						{
+							SalasLlaves.set(j, new Pair<Integer,Integer>(i, frecuencias[i]));
+							auxInt = true;
+						}
 					}
+					if (auxInt == false && SalasLlaves.size() < 9)
+						SalasLlaves.add(SalasLlaves.size(), new Pair<Integer,Integer>(i, frecuencias[i]));
 				}
-				if (auxInt == false && SalasLlaves.size() < 9)
-					SalasLlaves.add(SalasLlaves.size(), new Pair<Integer,Integer>(i, frecuencias[i]));
 			}
-			
+		System.out.println(SalasLlaves);
+		for (int i = 0;i<frecuencias.length && SalasLlaves.size()<9;i++) 
+		{
+			if (frecuencias[i] == 0)
+			{
+				SalasLlaves.add(SalasLlaves.size(), new Pair<Integer,Integer>(i, frecuencias[i]));
+			}
+		}
 		Integer[] SalasConLlaves = new Integer[9];
 		
 		for (int i = 0;i<9;i++)
@@ -365,7 +375,7 @@ public class Mapa {
 
 	public static void main(String[] args)
 	{
-		Mapa Map = new Mapa(6,6,35,5);
+		Mapa Map = new Mapa(4,4,15,5);
 		System.out.println(Map);
 		Integer[] Salas = Map.SalasMasFrec();
 		for(int i=0;i<9;i++)
@@ -373,6 +383,5 @@ public class Mapa {
 			System.out.print(Salas[i] + " ");
 		}
 	}
-	
 }
 

@@ -348,7 +348,7 @@ public class Sala{
 		boolean fin = false;
 		int cuantos = colaPers.size();
 		
-		for (int i = 0; i < cuantos && fin == false; i++) {
+		for (int i = 0; i < cuantos; i++) {
 			
 			persAux = colaPers.remove(0);
 			

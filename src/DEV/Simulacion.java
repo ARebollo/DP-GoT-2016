@@ -159,7 +159,7 @@ public class Simulacion {
 		// ----------------------
 		// Mostrando ganadores
 		// ----------------------
-		System.out.println("(nuevorey:" + mapaGOT.getPuertaTrono().getPersGanador().toString());
+		System.out.println("(nuevorey:" + mapaGOT.getPuertaTrono().getPersTrono().get(0));
 	}
 	
 	private void datosFin(PrintWriter out) {
@@ -169,7 +169,9 @@ public class Simulacion {
 		// ----------------------
 		// Mostrando ganadores
 		// ----------------------
-		out.println("(nuevorey:" + mapaGOT.getPuertaTrono().getPersGanador().toString());
+		out.println("(nuevorey:" + mapaGOT.getPuertaTrono().getPersTrono().get(0));
+		for(int i = 1;i<mapaGOT.getPuertaTrono().getPersTrono().size();i++)
+			out.println(mapaGOT.getPuertaTrono().getPersTrono().get(i));
 	}
 
 	/**

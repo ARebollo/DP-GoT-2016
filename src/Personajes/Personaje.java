@@ -409,14 +409,19 @@ public abstract class Personaje {
 			
 			if (map.getId_salida() == idSala)	//Si la estacion en la que se encuentra el pj es la de salida, interactuar con la puerta, y si queda camino, moverse al que indica
 			{
-				tocarPuerta(map.getPuertaTrono());
-				moverse(map);
-				
+				if(!map.finJuego())
+				{
+					tocarPuerta(map.getPuertaTrono());
+					moverse(map);
+				}
 				//Si la puerta se ha abierto hay que sacar al personaje
 				if (map.finJuego())
 				{
 					map.buscarSala(idSala).getColaPers().remove(this);
+					map.getPuertaTrono().aniadirGanador(this);
+					setidSala(1111);
 				}
+				else accionPersonaje(map.buscarSala(idSala));
 			}
 			else
 			{
@@ -450,7 +455,7 @@ public abstract class Personaje {
 				Llaves = Llaves + " " + it.next().toString();
 			}
 		
-		  return getClass().getSimpleName() + ":" + marcaId + ":" + idSala + ":" + getTurnoMasAlto() + ":" + Llaves + ")";
+		  return getClass().getSimpleName().toLowerCase() + ":" + marcaId + ":" + idSala + ":" + getTurnoMasAlto() + ":" + Llaves + ")";
 		}
  
 }
