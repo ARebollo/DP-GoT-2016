@@ -14,19 +14,34 @@ import Estructuras.Llave;
 * @author
 *   <b> Antonio Rebollo Guerra, Carlos Salguero Sanchez </b><br>
 *   <b> Asignatura Desarrollo de Programas</b><br>
-*   <b> Curso 15/16 </b>
+*   <b> Curso 16/17 </b>
 */
 public abstract class Personaje {
        
         enum dir {N, S, E, O};
        
+        /** Nombre del Personaje */
         protected String nombrePersonaje;
+        
+        /** Numero identificador de la Sala en la que se encuentra el Personaje */
         protected int idSala;
+        
+        /** Letra que identifica al Personaje */
         protected char marcaId;
+        
+        /** Turno a partir del cual el Personaje empieza a actuar */
         protected int turno;
+        
+        /** Turno actual del Personaje en la simulacion */
         protected int turnoActual;
-        protected boolean haMovido; //Indica si el personaje ha actuado este turno o no
+        
+        /** Indica si un Personaje ha realizado su turno (T) o no (F) */
+        protected boolean haMovido; 
+        
+        /** Cola que almacena el camino que ha de seguir el Personaje por la Galaxia */
         protected Queue<dir> camino;
+        
+        /** Lista que almacena los Midi que posee el Personaje */
         protected LinkedList<Llave> pilaLlave;
         
        /**
@@ -51,8 +66,8 @@ public abstract class Personaje {
         * @param nombre Nombre del personaje
         * @param marcaId Marca del personaje
         * @param turno Turno en el que empieza a moverse el personaje
-        * @param idSala Estacion en la que se encuentra el personaje
-        * @param map Nuestra Mapa
+        * @param idSala Sala en la que se encuentra el personaje
+        * @param map Nuestro Mapa
         * 
         */
         public Personaje(String nombre, char marcaId, int turno, int idSala, Mapa map){
@@ -197,7 +212,7 @@ public abstract class Personaje {
 		/**
 		 * Obtiene el atributo idSala de la clase Personaje
 		 * 
-		 * @return Id de la estacion en la que se encuentra el Personaje
+		 * @return Id de la Sala en la que se encuentra el Personaje
 		 * 
 		 */
 		public int getidSala() {
@@ -274,6 +289,12 @@ public abstract class Personaje {
 			this.turnoActual = turnoActual;
 		}
 		
+		/**
+		 * Obtiene el valor mas alto entre el turnoActual o el turno
+		 * 
+		 * @return Entero con el valor mas alto entre turno o turnoActual
+		 * 
+		 */
 		public int getTurnoMasAlto(){
 			
 			int res = 0;
@@ -357,12 +378,12 @@ public abstract class Personaje {
 		}
 		
 		/**
-		 * Metodo para convertir un tipo dir a un entero que se adapte a las dimensiones de la Mapa y seniale la Estacion destino
+		 * Metodo para convertir un tipo dir a un entero que se adapte a las dimensiones de la Mapa y seniale la Sala destino
 		 * 
 		 * @param direccion Tipo dir
-		 * @param ancho Anchura de la Mapa
+		 * @param ancho Anchura del Mapa
 		 * 
-		 * @return Entero que señala la id de la Estacion destino
+		 * @return Entero que señala la id de la Sala destino
 		 * 
 		 */
 		protected int dirACamino(dir direccion, int ancho){
@@ -400,14 +421,14 @@ public abstract class Personaje {
 		/**
 		 * Metodo para llevar a cabo el movimiento del personaje
 		 * 
-		 * @param map Nuestra Mapa
+		 * @param map Nuestro Mapa
 		 * 
 		 */
 		public void turnoPj(Mapa map){
 			setHaMovido(true);
 			turnoActual++;
 			
-			if (map.getId_salida() == idSala)	//Si la estacion en la que se encuentra el pj es la de salida, interactuar con la puerta, y si queda camino, moverse al que indica
+			if (map.getId_salida() == idSala)	//Si la Sala en la que se encuentra el pj es la de salida, interactuar con la puerta, y si queda camino, moverse al que indica
 			{
 				if(!map.finJuego())
 				{
@@ -431,7 +452,7 @@ public abstract class Personaje {
 		}
 		
 		//Realiza la accion apropiada para cada pj, es llamado por mover
-		// TODO necesito un modulo que devuelva como String las marcas que se han comido los no muertos e implementar en datosAfichero
+
 		protected abstract void tocarPuerta(Puerta puertamap);
 		
 		protected abstract void moverse(Mapa map);

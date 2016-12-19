@@ -466,10 +466,10 @@ public class Grafo {
       }
        
      /**
-   	  * a
+   	  * Metodo para buscar de manera aleatoria si una pared puede tener un atajo en cualquier direccion cardinal
    	  * 
-   	  * @param b
-   	  * @param semilla Semilla para el generador de numeros aleatorios
+   	  * @param ancho Anchura del Mapa
+   	  * @param randomGenerator Generador de numeros aleatorios
    	  * 
    	  */ 
       public void tirarParedesAtajo(int ancho, Random randomGenerator){	
@@ -525,7 +525,17 @@ public class Grafo {
              }        	 	 
          }    	     	 	 
       }
-         
+      
+      /**
+    	* Metodo para comprobar si se puede crear un atajo al Norte de la Sala seleccionada
+    	* 
+    	* @param ancho Anchura del Mapa
+    	* @param casilla Sala a comprobar
+    	* @param tipo Tipo de casilla
+    	* 
+    	* @return True : Si el atajo se ha creado <br> False : Si el atajo no se ha creado
+    	* 
+    	*/
       private boolean AtajoN(int ancho, int casilla, int tipo){	
     	  
     	  boolean correcto = true; 
@@ -566,24 +576,19 @@ public class Grafo {
          	  floyd();
     	  }
     	  
-    	  return correcto;
-    	  
-    	  //check x con x-1
-    	  //check x-ancho con x-ancho-1
-    	  //check x-1 con x-ancho-1
-    	  
-    	  //check x con x+1 	  
-    	  //check x-ancho con x-ancho+1 
-    	  //check x+1 con x-ancho+1
-    	  
-    	  //Si hay algun positivo en cada bloque de 3 resultado -> positivo
-    	  //Si hay un negativo en el resultado de algun bloque -> ufail
-    	  //Try again
-    	  
-    	  //Todo esto contando que sea una casilla en mitad de la nada, si esta en los bordes go fuck yourself
-    	    	  
+    	  return correcto; 	    	  
       }
       
+   /**
+  	* Metodo para comprobar si se puede crear un atajo al Sur de la Sala seleccionada
+  	* 
+  	* @param ancho Anchura del Mapa
+  	* @param casilla Sala a comprobar
+  	* @param tipo Tipo de casilla
+  	* 
+  	* @return True : Si el atajo se ha creado <br> False : Si el atajo no se ha creado
+  	* 
+  	*/
       private boolean AtajoS(int ancho, int casilla, int tipo){	
     	  
     	  boolean correcto = true; 
@@ -626,6 +631,16 @@ public class Grafo {
     	  return correcto;	  
       }
       
+   /**
+  	* Metodo para comprobar si se puede crear un atajo al Oeste de la Sala seleccionada
+  	* 
+  	* @param ancho Anchura del Mapa
+  	* @param casilla Sala a comprobar
+  	* @param tipo Tipo de casilla
+  	* 
+  	* @return True : Si el atajo se ha creado <br> False : Si el atajo no se ha creado
+  	* 
+  	*/
       private boolean AtajoO(int ancho, int casilla, int tipo){	
     	  
     	  boolean correcto = true; 
@@ -668,6 +683,16 @@ public class Grafo {
     	  return correcto;		  
       }
       
+   /**
+  	* Metodo para comprobar si se puede crear un atajo al Este de la Sala seleccionada
+  	* 
+  	* @param ancho Anchura del Mapa
+  	* @param casilla Sala a comprobar
+  	* @param tipo Tipo de casilla
+  	* 
+  	* @return True : Si el atajo se ha creado <br> False : Si el atajo no se ha creado
+  	* 
+  	*/
       private boolean AtajoE(int ancho, int casilla, int tipo){	
     	  
     	  boolean correcto = true; 
@@ -710,6 +735,15 @@ public class Grafo {
     	  return correcto;		  
       }
       
+   /**
+  	* Metodo que devuelve un entero segun donde se encuentre la casilla en la matriz, dentro, en los bordes o en las esquinas
+  	* 
+  	* @param ancho Anchura del Mapa
+  	* @param casilla Sala a comprobar
+  	* 
+  	* @return Entero con el tipo de casilla
+  	* 
+  	*/
       private int tipoCasilla(int ancho, int casilla){
     	  
     	int tipo = -1;

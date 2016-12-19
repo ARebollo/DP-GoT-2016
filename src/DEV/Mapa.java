@@ -9,20 +9,48 @@ import Estructuras.Grafo;
 import Estructuras.Llave;
 import Estructuras.Pair;
 
-
+/**
+* Declaracion de la clase Mapa
+* @author
+*   <b> Antonio Rebollo Guerra, Carlos Salguero Sanchez </b><br>
+*   <b> Asignatura Desarrollo de Programas</b><br>
+*   <b> Curso 16/17 </b>
+*/
 public class Mapa {
 	
+	/** Altura de la matriz de salas */
 	private int alto;
+	
+	/** Anchura de la matriz de salas */
 	private int ancho;
+	
+	/** Numero de la Sala que contiene la Puerta del trono */
 	private int id_salida;
+	
+	/** La Puerta del trono */
 	private Puerta puertaTrono;
+	
+	/** Matriz que contiene las Salas del Mapa */
 	private Sala[][] mapaSalas;
+	
+	/** Cola que almacena las LLave a repartir entre las Salas del Mapa */
 	private Queue<Llave> listaLlaveMapa;
+	
+	/** Acceso a la clase Grafo para los metodos relacionados con las Salas del Mapa */
 	private Grafo grafoMapa;
 	
-	/* Para pasar el mapa inicial al log */
+	/** String que contiene el mapa sin ningun atajo */
 	private String mapaSinAtajos;
 	
+	/**
+	 * Constructor parametrizado de la clase Mapa 
+	 * 
+	 * @param alto Altura de la matriz de salas
+	 * @param ancho Anchura de la matriz de salas
+	 * @param id Numero de la Sala que contiene la Puerta del trono
+	 * @param prof Profundidad de la cerradura de la Puerta del trono                   
+	 * 
+	 */
 	Mapa(int alto, int ancho, int id, int prof){
 		this.alto = alto;
 		this.ancho = ancho;
@@ -63,17 +91,24 @@ public class Mapa {
 		// Repartir llaves
 		Integer[] repartirLlaves = SalasMasFrec(); 
 		
-		//Recorre el vector de las mas frecuentadas
+		// Recorre el vector de las mas frecuentadas
 		for (int i = 0; i<9; i++){
 			
-			//Mete 5 llaves en cada una
+			// Mete 5 llaves en cada una
 			for (int j = 0; j<5; j++){
 				buscarSala(repartirLlaves[i]).aniadirLlave(listaLlaveMapa.poll());
 			}			
 		}
 	}
 	
+	/**
+	 * Metodo para llamar a los Personaje en el Mapa para que realizen sus turnos
+	 * 
+	 * @return True : si el turno se ha hecho correctamente <br> False : si el turno no se ha llevado a cabo correctamente
+	 * 
+	 */
 	public boolean simTurnoMapa(){
+		
 		boolean fin = false;
 		for(int i = 0;i<alto;i++)
 		{
@@ -88,8 +123,14 @@ public class Mapa {
 		return fin;
 	}
 	
-	public Integer[] SalasMasFrec()
-	{
+	/**
+	 * Metodo para obtener un vector de enteros, ordenadas de mayor a menor, de las Sala mas frecuentadas en el Mapa
+	 * 
+	 * @return Vector de enteros con la id de las salas mas frecuentadas, ordenadas de mayor a menor
+	 * 
+	 */
+	public Integer[] SalasMasFrec(){
+		
 		List<LinkedList<Integer>> listaCam = new LinkedList<LinkedList<Integer>>();
 		grafoMapa.encontrarListaCaminos(0, id_salida, listaCam, new LinkedList<Integer>());
 		
@@ -158,8 +199,14 @@ public class Mapa {
 		return SalasConLlaves;
 	}
 	
-	
+	/**
+	 * Metodo para dibujar el Mapa con sus Salas y respectivos personajes
+	 * 
+	 * @return String con el dibujo de las Salas del Mapa con sus personajes
+	 * 
+	 */
 	private String mapaAString(){
+		
 		String map = "";
 		int y = 0;
 		int x = 0;
@@ -241,6 +288,12 @@ public class Mapa {
 		return map;
 	}
 	
+	/**
+	 * Metodo para dibujar el Mapa con sus Salas, pero sin personajes
+	 * 
+	 * @return String con el dibujo de las Salas del Mapa sin personajes
+	 * 
+	 */
 	private String mapaAStringSinPJ(){
 		String map = "";
 		int y = 0;
@@ -313,86 +366,179 @@ public class Mapa {
 		
 		return map;
 	}
-
+	
+	/**
+	 * Metodo para buscar una Sala en el Mapa
+	 * 
+	 * @param id Id de la Sala a buscar
+	 * 
+	 * @return Objeto de la clase Sala
+	 * 
+	 */
 	public Sala buscarSala(int id) {
 
 		return mapaSalas[id / ancho][id % ancho];
 
 	}
 	
+	/**
+	 * Obtiene el atributo alto de la clase Mapa
+	 * 
+	 * @return Entero con la altura de la Mapa
+	 * 
+	 */
 	public int getAlto() {
 		return alto;
 	}
 
+	/**
+	 * Cambia el valor del atributo alto de la clase Mapa
+	 * 
+	 * @param alto Nuevo valor entero
+	 * 
+	 */
 	public void setAlto(int alto) {
 		this.alto = alto;
 	}
-
+	
+	/**
+	 * Obtiene el atributo ancho de la clase Mapa
+	 * 
+	 * @return Entero con la anchura de la Mapa
+	 * 
+	 */
 	public int getAncho() {
 		return ancho;
 	}
 
+	/**
+	 * Cambia el valor del atributo ancho de la clase Mapa
+	 * 
+	 * @param ancho Nuevo valor entero
+	 * 
+	 */
 	public void setAncho(int ancho) {
 		this.ancho = ancho;
 	}
 
+	/**
+	 * Obtiene el atributo id_salida de la clase Mapa
+	 * 
+	 * @return Entero con la id de la Sala que contiene la Puerta del trono
+	 * 
+	 */
 	public int getId_salida() {
 		return id_salida;
 	}
 
+	/**
+	 * Cambia el valor del atributo id_salida de la clase Mapa
+	 * 
+	 * @param id_salida Nuevo valor entero
+	 * 
+	 */
 	public void setId_salida(int id_salida) {
 		this.id_salida = id_salida;
 	}
-
+	
+	/**
+	 * Obtiene el atributo puertaTrono de la clase Mapa
+	 * 
+	 * @return Objeto de la clase Puerta
+	 * 
+	 */
 	public Puerta getPuertaTrono() {
 		return puertaTrono;
 	}
 
+	/**
+	 * Cambia el atributo puertaTrono de la clase Mapa
+	 * 
+	 * @param puertaTrono Nuevo objeto de la clase Puerta
+	 * 
+	 */
 	public void setPuertaTrono(Puerta puertaTrono) {
 		this.puertaTrono = puertaTrono;
 	}
 
+	/**
+	 * Obtiene la matriz de las Salas que componen el Mapa
+	 * 
+	 * @return Matriz de tipo Sala que componen el Mapa
+	 * 
+	 */
 	public Sala[][] getMapaSalas() {
 		return mapaSalas;
 	}
 
+	/**
+	 * Cambia la matriz de las Salas que componen el Mapa
+	 * 
+	 * @param mapaSalas Nueva matriz de tipo Sala
+	 * 
+	 */
 	public void setMapaSalas(Sala[][] mapaSalas) {
 		this.mapaSalas = mapaSalas;
 	}
 
+	/**
+	 * Obtiene el atributo grafoMapa de la clase Mapa
+	 * 
+	 * @return Objeto de la clase Grafo
+	 * 
+	 */
 	public Grafo getGrafoMapa() {
 		return grafoMapa;
 	}
 
+	/**
+	 * Cambia el atributo grafoMapa de la clase Mapa
+	 * 
+	 * @param grafoMapa Nuevo objeto de la clase Grafo
+	 * 
+	 */
 	public void setGrafoMapa(Grafo grafoMapa) {
 		this.grafoMapa = grafoMapa;
 	}
-
+	
+	/**
+	 * Obtiene el atributo mapaSinAtajos de la clase Mapa
+	 * 
+	 * @return String con el mapa de salas, sin atajos
+	 * 
+	 */
 	public String getMapaSinAtajos() {
 		return mapaSinAtajos;
 	}
-
+	
+	/**
+	 * Cambia el atributo mapaSinAtajos de la clase Mapa
+	 * 
+	 * @param mapaSinAtajos Nuevo string de un mapa
+	 * 
+	 */
 	public void setMapaSinAtajos(String mapaSinAtajos) {
 		this.mapaSinAtajos = mapaSinAtajos;
 	}
 
+	/**
+	 * Indica si la Puerta del trono esta abierta
+	 * 
+	 * @return True : si la Puerta esta abierta <br> False : si la Puerta esta cerrada
+	 * 
+	 */
 	public boolean finJuego() {
 		return puertaTrono.isEstado();
 	}
-
+	
+	/**
+	 * Obtiene el dibujo con las Sala que forman el Mapa
+	 * 
+	 * @return String con el mapa de salas
+	 * 
+	 */
 	public String toString(){
 		return this.mapaAString();
-	}
-
-	public static void main(String[] args)
-	{
-		Mapa Map = new Mapa(4,4,15,5);
-		System.out.println(Map);
-		Integer[] Salas = Map.SalasMasFrec();
-		for(int i=0;i<9;i++)
-		{
-			System.out.print(Salas[i] + " ");
-		}
 	}
 }
 
