@@ -10,6 +10,11 @@ import Excepciones.ConfigNoValida;
 import Excepciones.PersNoValido;
 import Personajes.*;
 
+/**
+ * Carga los datos desde el fichero y crea el mapa y los personajes de la simulación
+ *
+ * @param fileName El nombre del archivo desde el que se cargan los datos
+ */
 public class Cargador {
 	Mapa load (String fileName) throws IOException, ConfigNoValida
 	{
