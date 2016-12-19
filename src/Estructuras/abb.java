@@ -8,7 +8,7 @@ import java.util.Queue;
 * @author
 *   <b> Antonio Rebollo Guerra, Carlos Salguero Sanchez </b><br>
 *   <b> Asignatura Desarrollo de Programas</b><br>
-*   <b> Curso 15/16 </b>
+*   <b> Curso 16/17 </b>
 */
 public class abb <T extends Comparable<T>> {
 	 

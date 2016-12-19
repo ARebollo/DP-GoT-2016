@@ -7,7 +7,7 @@ import Estructuras.Llave;
 * Declaracion de la clase pruebasPuerta
 * @author
 *   <b> Antonio Rebollo Guerra,</b><br>
-*   <b>Carlos Salguero Sanchez. </b><br>
+*   <b> Carlos Salguero Sanchez. </b><br>
 *   <b> Asignatura Desarrollo de Programas</b><br>
 *   <b> Curso 16/17 </b>
 */

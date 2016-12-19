@@ -5,7 +5,7 @@ package Estructuras;
 * @author
 *   <b> Antonio Rebollo Guerra, Carlos Salguero Sanchez </b><br>
 *   <b> Asignatura Desarrollo de Programas</b><br>
-*   <b> Curso 15/16 </b>
+*   <b> Curso 16/17 </b>
 */
 public class Llave implements Comparable<Llave> {
 	
@@ -63,7 +63,7 @@ public class Llave implements Comparable<Llave> {
 	/**
    	 * Compara el valor de id entre dos Llaves
    	 * 
-   	 * @param mComp Objeto de clase Llave
+   	 * @param mComp Objeto de la clase Llave
    	 * 
    	 * @return -1 si la id de la clase es menor <br> 0 si la id de la clase es la misma <br> 1 si la id de la clase es mayor
    	 * 
@@ -78,8 +78,6 @@ public class Llave implements Comparable<Llave> {
 			return 1;
 	}
 	
-	
-	
 	/**
    	 * Muestra la informacion de la clase Llave
    	 * 
@@ -93,7 +91,7 @@ public class Llave implements Comparable<Llave> {
 
 	@Override
 	/**
-   	 * Devuelve el hashCode de un Llave
+   	 * Devuelve el hashCode de una Llave
    	 * 
    	 * @return Entero con el valor del hashCode
    	 * 
@@ -105,7 +103,7 @@ public class Llave implements Comparable<Llave> {
 	/**
    	 * Comprueba si dos Llave son iguales
    	 * 
-   	 * @return True : si ambos Llave son iguales <br> False : si los Llave son distintos
+   	 * @return True : si ambos Llave son iguales <br> False : si las Llaves son distintas
    	 * 
    	 */
 	@Override

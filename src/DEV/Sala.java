@@ -12,13 +12,20 @@ import Personajes.Personaje;
 * @author
 *   <b> Antonio Rebollo Guerra, Carlos Salguero Sanchez </b><br>
 *   <b> Asignatura Desarrollo de Programas</b><br>
-*   <b> Curso 15/16 </b>
+*   <b> Curso 16/17 </b>
 */
 public class Sala{
 	
+	/** Numero identificador de la Sala */
 	private int id;
+	
+	/** Indica si la Puerta se considera de salida o no */
 	private boolean puertaSalida;
+	
+	/** Lista que almacena las LLave en la Sala */
     private List<Llave> listaLlaveSala;
+    
+    /** Lista que almacena los Personaje en la Sala */
 	private List<Personaje> colaPers;
 	
 	/**
@@ -31,7 +38,6 @@ public class Sala{
 		puertaSalida = false;
 		listaLlaveSala = new LinkedList<Llave>();
 		colaPers = new LinkedList<Personaje>();
-		
 	}
 	
 	/**
@@ -45,8 +51,7 @@ public class Sala{
 		this.id = id;	
 		puertaSalida = false;
 		listaLlaveSala = new LinkedList<Llave>();
-		colaPers = new LinkedList<Personaje>();
-		
+		colaPers = new LinkedList<Personaje>();	
 	}
 	
 	/**
@@ -118,7 +123,7 @@ public class Sala{
 	}
 	
 	/**
-   	 * Metodo para obtener y quitar la primera llave de la lista en la Sala
+   	 * Metodo para obtener y quitar la primera LLave de la lista en la Sala
    	 * 
    	 * @return Objeto de la clase Llave
    	 * 
@@ -129,9 +134,9 @@ public class Sala{
 	}
 	
 	/**
-   	 * Indica si la Sala contiene llaves
+   	 * Indica si la Sala contiene LLave
    	 * 
-   	 * @return True : si la Sala contiene alguna llave <br> False : si la Sala no contiene ninguna llave
+   	 * @return True : si la Sala contiene alguna llave <br> False : si la Sala no contiene ninguna LLave
    	 * 
    	 */
 	public boolean hayLlaves(){
@@ -151,7 +156,7 @@ public class Sala{
 	/**
    	 * Metodo para sacar un personaje de la sala
    	 * 
-   	 * @return El primer personaje de la cola
+   	 * @return Objeto de la clase Personaje
    	 * 
    	 */
 	public Personaje sacarPj(){
@@ -169,7 +174,7 @@ public class Sala{
 	}
 	
 	/**
-   	 * Metodo para mostrar las llaves que tiene la Sala
+   	 * Metodo para mostrar las LLave que tiene la Sala
    	 * 
    	 */
 	public void mostrarLista(){
@@ -179,15 +184,13 @@ public class Sala{
 		while (it.hasNext() == true){
 			
 			System.out.print(it.next().toString() + " ");
-
-		}
-		
+		}		
 	}
 	
 	/**
-   	 * Metodo para devolver las llaves que tiene la Sala en forma de String
+   	 * Metodo para devolver las LLave que tiene la Sala en forma de String
    	 * 
-   	 * @return Cadena con la lista de llaves de la Sala
+   	 * @return Cadena con la lista de LLave de la Sala
    	 * 
    	 */
 	public String mostrarListaStr(){
@@ -241,107 +244,11 @@ public class Sala{
 	// Getters & Setters
 	
 	/**
-   	 * Obtiene el atributo Id de la clase Sala
-   	 * 
-   	 * @return Entero con la id de la Sala
-   	 * 
-   	 */
-	public int getId() {
-		return id;
-	}
-	
-	/**
-   	 * Cambia el valor del atributo Id de la clase Sala
-   	 * 
-   	 * @param id Nuevo valor entero
-   	 * 
-   	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	/**
-   	 * Obtiene la lista de llaves de la clase Sala
-   	 * 
-   	 * @return Lista de tipo Llave
-   	 * 
-   	 */
-	public List<Llave> getlistaLlaveSala() {
-		return listaLlaveSala;
-	}
-	
-	/**
-   	 * Cambia la lista de llaves de la clase Sala
-   	 * 
-   	 * @param listaLlaveSala Nueva lista de tipo Llave
-   	 * 
-   	 */
-	public void setlistaLlaveSala(List<Llave> listaLlaveSala) {
-		this.listaLlaveSala = listaLlaveSala;
-	}
-	
-	/**
-   	 * Obtiene la lista de Personajes de la clase Sala
-   	 * 
-   	 * @return Lista de tipo Personaje
-   	 * 
-   	 */
-	public List<Personaje> getColaPers() {
-		return colaPers;
-	}
-	
-	/**
-   	 * Cambia la lista de Personajes de la clase Sala
-   	 * 
-   	 * @param colaPers Nueva lista de tipo Personaje
-   	 * 
-   	 */
-	public void setColaPers(List<Personaje> colaPers) {
-		this.colaPers = colaPers;
-	}
-
-	/**
-   	 * Indica si la Sala contiene una puerta de salida
-   	 * 
-   	 * @return True si la Sala contiene una puerta de salida <br> False si la Sala no contiene una puerta de salida
-   	 * 
-   	 */
-	public boolean isPuertaSalida() {
-		return puertaSalida;
-	}
-	
-	/**
-   	 * Cambia el valor del booleano PuertaSalida de la clase Sala
-   	 * 
-   	 * @param puertaSalida Nuevo valor (True || False)
-   	 * 
-   	 */
-	public void setPuertaSalida(boolean puertaSalida) {
-		this.puertaSalida = puertaSalida;
-	}
-	
-	/**
-   	 * Cambia el valor del booleano haMovido de cada Personaje que se encuentra en la Sala a False
-   	 * 
-   	 */
-	public void reiniciarTurnoPj(){
-		
-		Personaje persAux;
-		
-		for (int i = 0; i < colaPers.size(); i++) {
-			
-			persAux = colaPers.get(i);
-			
-			persAux.setHaMovido(false);
-		}	
-	}
-	
-	/**
-   	 * Llama al metodo turnoPj de cada Personaje que se encuentra en la Sala y no haya realizado su turno
-   	 * 
-   	 * @param mapa Nuestro mapa
-   	 * 
-   	 */
+	 * Llama al metodo turnoPj de cada Personaje que se encuentra en la Sala y aun no haya realizado su turno
+	 * 
+	 * @param mapa Nuestro Mapa
+	 * 
+	 */
 	public boolean activarPJ (Mapa mapa){
 		
 		Personaje persAux;
@@ -364,6 +271,102 @@ public class Sala{
 			fin = mapa.finJuego();
 		}
 		return fin;
+	}
+
+	/**
+	 * Cambia el valor del booleano haMovido de cada Personaje que se encuentra en la Sala a False
+	 * 
+	 */
+	public void reiniciarTurnoPj(){
+		
+		Personaje persAux;
+		
+		for (int i = 0; i < colaPers.size(); i++) {
+			
+			persAux = colaPers.get(i);
+			
+			persAux.setHaMovido(false);
+		}	
+	}
+
+	/**
+   	 * Obtiene el atributo Id de la clase Sala
+   	 * 
+   	 * @return Entero con la id de la Sala
+   	 * 
+   	 */
+	public int getId() {
+		return id;
+	}
+	
+	/**
+   	 * Cambia el valor del atributo Id de la clase Sala
+   	 * 
+   	 * @param id Nuevo valor entero
+   	 * 
+   	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	/**
+   	 * Obtiene la lista de LLave de la clase Sala
+   	 * 
+   	 * @return Lista de tipo Llave
+   	 * 
+   	 */
+	public List<Llave> getlistaLlaveSala() {
+		return listaLlaveSala;
+	}
+	
+	/**
+   	 * Cambia la lista de LLave de la clase Sala
+   	 * 
+   	 * @param listaLlaveSala Nueva lista de tipo Llave
+   	 * 
+   	 */
+	public void setlistaLlaveSala(List<Llave> listaLlaveSala) {
+		this.listaLlaveSala = listaLlaveSala;
+	}
+	
+	/**
+   	 * Obtiene la lista de Personaje de la clase Sala
+   	 * 
+   	 * @return Lista de tipo Personaje
+   	 * 
+   	 */
+	public List<Personaje> getColaPers() {
+		return colaPers;
+	}
+	
+	/**
+   	 * Cambia la lista de Personaje de la clase Sala
+   	 * 
+   	 * @param colaPers Nueva lista de tipo Personaje
+   	 * 
+   	 */
+	public void setColaPers(List<Personaje> colaPers) {
+		this.colaPers = colaPers;
+	}
+
+	/**
+   	 * Indica si la Sala contiene una puerta de salida
+   	 * 
+   	 * @return True si la Sala contiene una puerta de salida <br> False si la Sala no contiene una puerta de salida
+   	 * 
+   	 */
+	public boolean isPuertaSalida() {
+		return puertaSalida;
+	}
+	
+	/**
+   	 * Cambia el valor del booleano puertaSalida de la clase Sala
+   	 * 
+   	 * @param puertaSalida Nuevo valor (True || False)
+   	 * 
+   	 */
+	public void setPuertaSalida(boolean puertaSalida) {
+		this.puertaSalida = puertaSalida;
 	}
 	
 	// To

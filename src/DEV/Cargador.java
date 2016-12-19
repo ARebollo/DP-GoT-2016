@@ -11,11 +11,20 @@ import Excepciones.PersNoValido;
 import Personajes.*;
 
 /**
- * Carga los datos desde el fichero y crea el mapa y los personajes de la simulación
- *
- * @param fileName El nombre del archivo desde el que se cargan los datos
- */
+* Declaracion de la clase Cargador
+* @author
+*   <b> Antonio Rebollo Guerra, Carlos Salguero Sanchez </b><br>
+*   <b> Asignatura Desarrollo de Programas</b><br>
+*   <b> Curso 16/17 </b>
+*/
 public class Cargador {
+	
+	/**
+	 * Metodo para cargar todos los datos del archivo y crear el mapa y los personajes basados en esos datos
+	 *  
+	 * @param fileName El nombre del archivo a cargar
+	 * 
+	 */
 	Mapa load (String fileName) throws IOException, ConfigNoValida
 	{
 		Mapa map = null;
@@ -166,6 +175,15 @@ public class Cargador {
 		return map;
 	}
 	
+	/**
+	 * Metodo para trocear cada linea y separarla por campos
+	 * 
+	 * @param S cadena con la linea completa leida
+	 * @param vCampos Array de String que contiene en cada posicion un campo distinto
+	 * 
+	 * @return numCampos Numero de campos encontrados
+	 * 
+	 */
 	private int trocearLineaInicial(String S, List<String> vCampos) {
 
 		boolean eol = false;
@@ -184,6 +202,12 @@ public class Cargador {
 		return numCampos;
 	}
 	
+	/**
+	 * Metodo para mostrar los campos en los que se ha dividido una linea
+	 * 
+	 * @param vCampos Array de String que contiene en cada posicion un campo distinto
+	 * 
+	 */
 	private void mostrarDatosInicial(List<String> vCampos) {
 		System.out.println(vCampos);
 	}

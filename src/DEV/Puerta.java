@@ -1,6 +1,5 @@
 package DEV;
 
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,14 +12,26 @@ import Personajes.Personaje;
 * @author
 *   <b> Antonio Rebollo Guerra, Carlos Salguero Sanchez </b><br>
 *   <b> Asignatura Desarrollo de Programas</b><br>
-*   <b> Curso 15/16 </b>
+*   <b> Curso 16/17 </b>
 */
 public class Puerta {
+	
+	/** Lista que almacena los Personaje que han entrado en la Puerta */
 	private List<Personaje> persTrono;
+	
+	/** Arbol que almacena las LLave que ya han sido probadas en la cerradura */
 	private abb<Llave> Probados;
+	
+	/** Arbol que almacena la combinacion de la cerradura */
 	private abb<Llave> Combinacion;
-	private boolean estado; // True abierta, False cerrada
+	
+	/** Indica si la Puerta esta abierta (T) o cerrada (F) */
+	private boolean estado; 
+	
+	/** Parametro que indica una constante de profundidad de la cerradura, tenido en cuenta a la hora de comprobar la apertura */
 	private int profundidad;
+	
+	/** Vector de LLave para la configuracion de la cerradura */
 	private Llave[] vectorCfg;
 	
 	/**
@@ -37,19 +48,27 @@ public class Puerta {
 		persTrono = new LinkedList<Personaje>();
 	}
 	
-	public Puerta(int prof){ // Constructor parametrizado, que utiliza el vector por defecto
+	/**
+   	 * Constructor parametrizado de la clase Puerta
+   	 * 
+   	 * @param prof Profundidad de la combinacion
+   	 * 
+   	 */
+	public Puerta(int prof){ // Constructor parametrizado, que utiliza el vector de combinacion por defecto
 		
 		estado = false;
 		Probados = new abb<Llave>();
 		Combinacion = new abb<Llave>();
 		profundidad = prof;
 		vectorCfg = new Llave[15];
+		
 		int pos = 0;
 		for (int i = 1;i<30;i = i+2)
 		{
 			vectorCfg[pos] = new Llave(i);
 			pos++;
 		}
+		
 		configurarCombinacionCfg(0, vectorCfg.length-1);
 		persTrono = new LinkedList<Personaje>();
 	}
@@ -85,7 +104,6 @@ public class Puerta {
 	  return a;
 	}
 
-	
 	/**
    	 * Cierra la puerta en caso de que este abierta, si no, la reinicia a su estado original
    	 * 
@@ -153,6 +171,17 @@ public class Puerta {
 	// Getters & Setters
 	
 	/**
+	 * Añade un Personaje a la lista de ganadores en la Puerta
+	 * 
+	 * @param personaje Objeto de la clase Personaje
+	 * 
+	 */
+	public void aniadirGanador(Personaje personaje)
+	{
+		persTrono.add(personaje);
+	}
+
+	/**
    	 * Obtiene el arbol Probados de la clase Puerta
    	 * 
    	 * @return Arbol de los Llave probados
@@ -174,12 +203,17 @@ public class Puerta {
 		Probados = probados;
 	}
 	
+	/**
+   	 * Obtiene el un string con las LLaves del arbol Probados de la clase Puerta
+   	 * 
+   	 * @return String de las LLaves probadas de la Puerta
+   	 * 
+   	 */
 	public String getProbadosString (){
 		
 		String combi = getProbados().arbolAString();
 		
-		return combi;
-		
+		return combi;	
 	}
 	
 	/**
@@ -204,6 +238,12 @@ public class Puerta {
 		Combinacion = combinacion;
 	}
 	
+	/**
+   	 * Obtiene el un string con la combinacion de la clase Puerta
+   	 * 
+   	 * @return String de la combinacion de la Puerta
+   	 * 
+   	 */
 	public String getCombinacionString (){
 		
 		String combi = getCombinacion().arbolAString();
@@ -277,17 +317,24 @@ public class Puerta {
 		
 		this.vectorCfg = vectorCfg;
 	}
-
-	public void aniadirGanador(Personaje personaje)
-	{
-		persTrono.add(personaje);
-	}
-
-	protected List<Personaje> getPersTrono() {
+	
+	/**
+   	 * Obtiene la lista de Personaje que se encuentran en la Puerta
+   	 * 
+   	 * @return Lista de tipo Personaje con los Personajes que han entrado en la puerta
+   	 * 
+   	 */
+	public List<Personaje> getPersTrono() {
 		return persTrono;
 	}
-
-	protected void setPersTrono(List<Personaje> persTrono) {
+	
+	/**
+   	 * Cambia la lista de Personaje que se encuentran en la Puerta
+   	 * 
+   	 * @return persTrono Nueva lista de tipo Personaje
+   	 * 
+   	 */
+	public void setPersTrono(List<Personaje> persTrono) {
 		this.persTrono = persTrono;
 	}
 	
